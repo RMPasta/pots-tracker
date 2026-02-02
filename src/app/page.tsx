@@ -6,7 +6,7 @@ export default async function Home() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-8">
-      <main className="flex max-w-2xl flex-col items-center gap-6 rounded-2xl bg-white/80 p-8 text-center shadow-(--shadow-soft) dark:bg-pastel-purple/10">
+      <main className="flex max-w-2xl flex-col items-center gap-6 rounded-2xl bg-card-bg p-8 text-center shadow-(--shadow-soft)">
         <h1 className="text-4xl font-semibold tracking-tight text-foreground-soft">
           POTS Tracker
         </h1>
@@ -17,14 +17,14 @@ export default async function Home() {
         {session ? (
           <Link
             href="/dashboard"
-            className="rounded-full bg-pastel-pink px-6 py-3 text-foreground-soft transition-colors hover:opacity-90"
+            className="rounded-full bg-btn-primary px-6 py-3 text-foreground-soft transition-colors hover:bg-btn-primary-hover"
           >
             Go to Dashboard
           </Link>
         ) : (
           <Link
             href="/auth/signin"
-            className="rounded-full bg-pastel-purple px-6 py-3 text-foreground-soft transition-colors hover:opacity-90"
+            className="rounded-full bg-btn-primary px-6 py-3 text-foreground-soft transition-colors hover:bg-btn-primary-hover"
           >
             Get Started
           </Link>

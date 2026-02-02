@@ -17,13 +17,13 @@ export function LogFormView() {
         <LogTypeToggle value={mode} onChange={setMode} />
         <Link
           href="/dashboard/history"
-          className="rounded-full border-2 border-pastel-purple/50 bg-pastel-yellow/30 px-4 py-2 text-center text-sm font-medium text-foreground-soft transition-colors hover:bg-pastel-yellow/50"
+          className="rounded-full bg-btn-secondary px-4 py-2 text-center text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-secondary-hover"
         >
           View history
         </Link>
       </div>
 
-      <div className="rounded-2xl bg-white/80 p-6 shadow-(--shadow-soft) dark:bg-pastel-purple/10">
+      <div className="rounded-2xl bg-card-bg p-6 shadow-(--shadow-soft)">
         {mode === 'daily' ? <DailyLogForm /> : <IncidentForm />}
       </div>
     </div>

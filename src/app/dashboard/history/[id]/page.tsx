@@ -52,20 +52,20 @@ export default async function ReportDetailPage({
 
   return (
     <div className="flex min-h-screen flex-col gap-6 p-8">
-      <header className="flex items-center justify-between rounded-2xl bg-white/80 px-4 py-3 shadow-(--shadow-soft) dark:bg-pastel-purple/10">
+      <header className="flex items-center justify-between rounded-2xl bg-card-bg px-4 py-3 shadow-(--shadow-soft)">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
           POTS Tracker
         </h1>
         <Link
           href="/dashboard/history"
-          className="rounded-full border-2 border-pastel-pink/50 bg-pastel-pink/20 px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-pastel-pink/30"
+          className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
         >
           Back to history
         </Link>
       </header>
 
       <main className="flex flex-1 flex-col gap-4">
-        <div className="rounded-2xl bg-white/80 p-6 shadow-(--shadow-soft) dark:bg-pastel-purple/10">
+        <div className="rounded-2xl bg-card-bg p-6 shadow-(--shadow-soft)">
           <h2 className="text-lg font-medium text-foreground-soft">
             {formatDate(report.date)}
           </h2>
@@ -119,7 +119,7 @@ export default async function ReportDetailPage({
                 {incidents.map((incident) => (
                   <li
                     key={incident.id}
-                    className="rounded-xl border border-pastel-purple/30 bg-pastel-yellow/10 p-4 dark:bg-pastel-purple/5"
+                    className="rounded-xl border border-pastel-outline-pink/40 bg-pastel-yellow/30 p-4"
                   >
                     {incident.time && (
                       <p className="text-sm font-medium text-foreground-soft/80">

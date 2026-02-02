@@ -54,13 +54,13 @@ export default async function HistoryPage() {
 
   return (
     <div className="flex min-h-screen flex-col gap-6 p-8">
-      <header className="flex items-center justify-between rounded-2xl bg-white/80 px-4 py-3 shadow-(--shadow-soft) dark:bg-pastel-purple/10">
+      <header className="flex items-center justify-between rounded-2xl bg-card-bg px-4 py-3 shadow-(--shadow-soft)">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
           POTS Tracker
         </h1>
         <Link
           href="/dashboard"
-          className="rounded-full border-2 border-pastel-pink/50 bg-pastel-pink/20 px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-pastel-pink/30"
+          className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
         >
           Back to dashboard
         </Link>
@@ -70,11 +70,11 @@ export default async function HistoryPage() {
         <h2 className="text-xl font-medium text-foreground-soft">History</h2>
 
         {reports.length === 0 ? (
-          <div className="rounded-2xl bg-white/80 p-8 text-center shadow-(--shadow-soft) dark:bg-pastel-purple/10">
+          <div className="rounded-2xl bg-card-bg p-8 text-center shadow-(--shadow-soft)">
             <p className="text-foreground-soft/90">No logs yet.</p>
             <Link
               href="/dashboard"
-              className="mt-4 inline-block rounded-full bg-pastel-pink px-6 py-3 font-medium text-foreground-soft transition-colors hover:opacity-90"
+              className="mt-4 inline-block rounded-full bg-btn-primary px-6 py-3 font-medium text-foreground-soft transition-colors hover:opacity-90"
             >
               Log your day
             </Link>
@@ -85,7 +85,7 @@ export default async function HistoryPage() {
               <li key={report.id}>
                 <Link
                   href={`/dashboard/history/${report.id}`}
-                  className="block rounded-2xl bg-white/80 p-4 shadow-(--shadow-soft) transition-colors hover:bg-pastel-purple/10 dark:bg-pastel-purple/10 dark:hover:bg-pastel-purple/20"
+                  className="block rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) transition-colors hover:bg-pastel-mint/40"
                 >
                   <span className="font-medium text-foreground-soft">
                     {formatDate(report.date)}

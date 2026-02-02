@@ -58,7 +58,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
 
   if (success) {
     return (
-      <div className="rounded-2xl bg-pastel-yellow/30 p-6 text-foreground-soft">
+      <div className="rounded-2xl bg-btn-secondary/60 p-6 text-foreground-soft">
         <p className="font-medium">Daily log saved.</p>
         <p className="mt-1 text-sm text-foreground-soft/80">
           You can <a href="/dashboard/history" className="underline">view history</a> or add another log.
@@ -85,7 +85,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-          className="w-full rounded-xl border border-pastel-purple/40 bg-white px-4 py-2 text-foreground-soft focus:border-pastel-purple focus:outline-none focus:ring-2 focus:ring-pastel-purple/40"
+          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
         />
         {fieldErrors.date && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.date.join(', ')}</p>
@@ -102,7 +102,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           onChange={(e) => setSymptoms(e.target.value)}
           rows={3}
           placeholder="e.g. dizziness, rapid heartbeat"
-          className="w-full rounded-xl border border-pastel-purple/40 bg-white px-4 py-2 text-foreground-soft placeholder:text-foreground-soft/50 focus:border-pastel-purple focus:outline-none focus:ring-2 focus:ring-pastel-purple/40"
+          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
         />
         {fieldErrors.symptoms && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.symptoms.join(', ')}</p>
@@ -119,7 +119,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           onChange={(e) => setDietBehaviorNotes(e.target.value)}
           rows={2}
           placeholder="What you ate or did"
-          className="w-full rounded-xl border border-pastel-purple/40 bg-white px-4 py-2 text-foreground-soft placeholder:text-foreground-soft/50 focus:border-pastel-purple focus:outline-none focus:ring-2 focus:ring-pastel-purple/40"
+          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
         />
         {fieldErrors.dietBehaviorNotes && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.dietBehaviorNotes.join(', ')}</p>
@@ -136,7 +136,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           value={overallFeeling}
           onChange={(e) => setOverallFeeling(e.target.value)}
           placeholder="e.g. okay, rough morning"
-          className="w-full rounded-xl border border-pastel-purple/40 bg-white px-4 py-2 text-foreground-soft placeholder:text-foreground-soft/50 focus:border-pastel-purple focus:outline-none focus:ring-2 focus:ring-pastel-purple/40"
+          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
         />
         {fieldErrors.overallFeeling && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.overallFeeling.join(', ')}</p>
@@ -146,7 +146,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       <button
         type="submit"
         disabled={loading}
-        className="rounded-full bg-pastel-pink px-6 py-3 font-medium text-foreground-soft transition-colors hover:opacity-90 disabled:opacity-50"
+        className="rounded-full bg-btn-primary px-6 py-3 font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover disabled:opacity-50"
       >
         {loading ? 'Saving…' : 'Save daily log'}
       </button>

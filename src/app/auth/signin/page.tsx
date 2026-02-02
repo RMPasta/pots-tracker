@@ -6,11 +6,11 @@ export default async function SignInPage() {
   if (session) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-8">
-        <div className="rounded-2xl bg-white/80 px-8 py-6 shadow-(--shadow-soft) dark:bg-pastel-purple/10">
+        <div className="rounded-2xl bg-card-bg px-8 py-6 shadow-(--shadow-soft)">
           <p className="text-lg text-foreground-soft">You are already signed in.</p>
           <a
             href="/dashboard"
-            className="mt-4 inline-block rounded-full bg-pastel-pink px-6 py-3 text-foreground-soft transition-colors hover:opacity-90"
+            className="mt-4 inline-block rounded-full bg-btn-primary px-6 py-3 text-foreground-soft transition-colors hover:bg-btn-primary-hover"
           >
             Go to Dashboard
           </a>
@@ -23,7 +23,7 @@ export default async function SignInPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 p-8">
-      <div className="w-full max-w-sm rounded-2xl bg-white/80 p-6 shadow-(--shadow-soft) dark:bg-pastel-purple/10">
+      <div className="w-full max-w-sm rounded-2xl bg-card-bg p-6 shadow-(--shadow-soft)">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
           Sign in to POTS Tracker
         </h1>
@@ -53,11 +53,11 @@ export default async function SignInPage() {
                   type="email"
                   required
                   placeholder="you@example.com"
-                  className="rounded-xl border border-pastel-purple/40 bg-white px-4 py-2 text-foreground-soft placeholder:text-foreground-soft/60 focus:border-pastel-purple focus:outline-none focus:ring-2 focus:ring-pastel-purple/40"
+                  className="rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
                 />
                 <button
                   type="submit"
-                  className="rounded-full bg-pastel-purple px-6 py-3 text-foreground-soft transition-colors hover:opacity-90"
+                  className="rounded-full bg-btn-primary px-6 py-3 text-foreground-soft transition-colors hover:bg-btn-primary-hover"
                 >
                   Send magic link
                 </button>
@@ -65,10 +65,10 @@ export default async function SignInPage() {
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-pastel-purple/30" />
+                  <span className="w-full border-t border-pastel-outline-pink/40" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="bg-white/80 px-2 text-foreground-soft/70 dark:bg-transparent">
+                  <span className="bg-card-bg px-2 text-foreground-soft/80">
                     or
                   </span>
                 </div>
@@ -84,7 +84,7 @@ export default async function SignInPage() {
           >
             <button
               type="submit"
-              className="w-full rounded-full border-2 border-pastel-purple/50 bg-pastel-yellow/30 px-6 py-3 text-foreground-soft shadow-(--shadow-soft) transition-colors hover:bg-pastel-yellow/50"
+              className="w-full rounded-full bg-btn-secondary px-6 py-3 text-foreground-soft shadow-(--shadow-soft) transition-colors hover:bg-btn-secondary-hover"
             >
               Sign in with Google
             </button>

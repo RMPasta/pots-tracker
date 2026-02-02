@@ -61,7 +61,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
 
   if (success) {
     return (
-      <div className="rounded-2xl bg-pastel-yellow/30 p-6 text-foreground-soft">
+      <div className="rounded-2xl bg-btn-secondary/60 p-6 text-foreground-soft">
         <p className="font-medium">Incident logged.</p>
         <p className="mt-1 text-sm text-foreground-soft/80">
           You can <a href="/dashboard/history" className="underline">view history</a> or log another incident.
@@ -89,7 +89,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
-            className="w-full rounded-xl border border-pastel-purple/40 bg-white px-4 py-2 text-foreground-soft focus:border-pastel-purple focus:outline-none focus:ring-2 focus:ring-pastel-purple/40"
+            className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
           />
           {fieldErrors.date && (
             <p className="mt-1 text-sm text-red-600">{fieldErrors.date.join(', ')}</p>
@@ -104,7 +104,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
-            className="w-full rounded-xl border border-pastel-purple/40 bg-white px-4 py-2 text-foreground-soft focus:border-pastel-purple focus:outline-none focus:ring-2 focus:ring-pastel-purple/40"
+            className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
           />
           {fieldErrors.time && (
             <p className="mt-1 text-sm text-red-600">{fieldErrors.time.join(', ')}</p>
@@ -122,7 +122,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
           onChange={(e) => setSymptoms(e.target.value)}
           rows={2}
           placeholder="What happened"
-          className="w-full rounded-xl border border-pastel-purple/40 bg-white px-4 py-2 text-foreground-soft placeholder:text-foreground-soft/50 focus:border-pastel-purple focus:outline-none focus:ring-2 focus:ring-pastel-purple/40"
+          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
         />
         {fieldErrors.symptoms && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.symptoms.join(', ')}</p>
@@ -139,7 +139,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
           onChange={(e) => setNotes(e.target.value)}
           rows={2}
           placeholder="Context or triggers"
-          className="w-full rounded-xl border border-pastel-purple/40 bg-white px-4 py-2 text-foreground-soft placeholder:text-foreground-soft/50 focus:border-pastel-purple focus:outline-none focus:ring-2 focus:ring-pastel-purple/40"
+          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
         />
         {fieldErrors.notes && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.notes.join(', ')}</p>
@@ -149,7 +149,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
       <button
         type="submit"
         disabled={loading}
-        className="rounded-full bg-pastel-purple px-6 py-3 font-medium text-foreground-soft transition-colors hover:opacity-90 disabled:opacity-50"
+        className="rounded-full bg-btn-outline px-6 py-3 font-medium text-foreground-soft transition-colors hover:opacity-90 disabled:opacity-50"
       >
         {loading ? 'Saving…' : 'Log incident'}
       </button>

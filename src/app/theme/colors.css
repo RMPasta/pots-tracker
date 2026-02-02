@@ -1,0 +1,87 @@
+/**
+ * Kawaii pastel theme – single source of truth for Tailwind custom colors.
+ * Reference: dreamy sky – very light baby blue at top, subtle lavender-pink at bottom. Light mode only for now.
+ */
+
+:root {
+  /* Base */
+  --color-white: #ffffff;
+  --color-foreground: #171717;
+
+  /* Page background – soft sky gradient (no dark blue) */
+  --color-page-bg-start: #e4f2fc;
+  --color-page-bg-end: #f8eef8;
+  --color-page-bg: #e4f2fc;
+
+  /* Cards and surfaces – white */
+  --color-card: #ffffff;
+
+  /* Pastels from reference (clouds, stars, sky) */
+  --color-pastel-baby-blue: #c8e8f8;
+  --color-pastel-lavender: #e8d0f8;
+  --color-pastel-peach-pink: #f8e0f0;
+  --color-pastel-cloud-pink: #fce0ef;
+  --color-pastel-cloud-pink-2: #ffd8e8;
+  --color-pastel-cloud-yellow: #fff8d0;
+  --color-pastel-cream: #fffac0;
+  --color-pastel-outline-pink: #f8b0d0;
+  --color-pastel-peach: #ffe0c0;
+
+  /* Semantic – buttons and accents (light only) */
+  --color-btn-primary: #ffd8e8;
+  --color-btn-primary-hover: #fce0ef;
+  --color-btn-secondary: #fff8d0;
+  --color-btn-secondary-hover: #fffac0;
+  --color-btn-outline: #e8d0f8;
+
+  /* Inputs */
+  --color-input-bg: #ffffff;
+  --color-input-text: #171717;
+  --color-input-placeholder: #6b7280;
+  --color-input-border: #f8b0d0;
+
+  /* Shadow and radius */
+  --shadow-soft: 0 2px 12px rgba(248, 176, 208, 0.15);
+  --radius-soft: 1rem;
+}
+
+/* Dark mode deferred – use same light sky for now; add thicker-pastel dark mode later */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-page-bg-start: #e4f2fc;
+    --color-page-bg-end: #f8eef8;
+    --color-page-bg: #e4f2fc;
+    --color-card: #ffffff;
+    --color-btn-primary: #ffd8e8;
+    --color-btn-primary-hover: #fce0ef;
+    --color-btn-secondary: #fff8d0;
+    --color-btn-secondary-hover: #fffac0;
+    --color-btn-outline: #e8d0f8;
+    --color-input-bg: #ffffff;
+    --color-input-text: #171717;
+    --color-input-placeholder: #6b7280;
+    --shadow-soft: 0 2px 12px rgba(248, 176, 208, 0.12);
+  }
+}
+
+@theme inline {
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-foreground);
+  --color-background-soft: var(--color-page-bg);
+  --color-foreground-soft: var(--color-foreground);
+  --color-card-bg: var(--color-card);
+  --color-pastel-pink: var(--color-pastel-cloud-pink-2);
+  --color-pastel-purple: var(--color-pastel-lavender);
+  --color-pastel-yellow: var(--color-pastel-cloud-yellow);
+  --color-pastel-mint: var(--color-pastel-baby-blue);
+  --color-pastel-outline-pink: var(--color-pastel-outline-pink);
+  --color-pastel-peach: var(--color-pastel-peach);
+  --color-input-bg: var(--color-input-bg);
+  --color-input-placeholder: var(--color-input-placeholder);
+  --color-input-text: var(--color-input-text);
+  --color-btn-primary: var(--color-btn-primary);
+  --color-btn-primary-hover: var(--color-btn-primary-hover);
+  --color-btn-secondary: var(--color-btn-secondary);
+  --color-btn-secondary-hover: var(--color-btn-secondary-hover);
+  --color-btn-outline: var(--color-btn-outline);
+}
