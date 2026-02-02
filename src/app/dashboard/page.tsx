@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { auth, signOut } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { LogFormView } from '@/components/LogFormView';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -16,19 +17,22 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
           POTS Tracker
         </h1>
-        <form
-          action={async () => {
-            'use server';
-            await signOut({ redirectTo: '/' });
-          }}
-        >
-          <button
-            type="submit"
-            className="rounded-full bg-btn-primary px-4 py-2 text-sm text-foreground-soft transition-colors hover:bg-btn-primary-hover"
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <form
+            action={async () => {
+              'use server';
+              await signOut({ redirectTo: '/' });
+            }}
           >
-            Sign out
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="rounded-full bg-btn-primary px-4 py-2 text-sm text-foreground-soft transition-colors hover:bg-btn-primary-hover"
+            >
+              Sign out
+            </button>
+          </form>
+        </div>
       </header>
       <main className="flex flex-1 flex-col gap-4">
         <div className="rounded-2xl bg-card-bg p-6 shadow-(--shadow-soft)">

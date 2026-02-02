@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { redirect, notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 function formatDate(d: Date): string {
   return new Date(d).toLocaleDateString(undefined, {
@@ -56,12 +57,15 @@ export default async function ReportDetailPage({
         <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
           POTS Tracker
         </h1>
-        <Link
-          href="/dashboard/history"
-          className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
-        >
-          Back to history
-        </Link>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Link
+            href="/dashboard/history"
+            className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
+          >
+            Back to history
+          </Link>
+        </div>
       </header>
 
       <main className="flex flex-1 flex-col gap-4">

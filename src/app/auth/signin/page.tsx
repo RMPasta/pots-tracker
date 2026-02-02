@@ -1,11 +1,15 @@
 import { auth, signIn } from '@/lib/auth';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default async function SignInPage() {
   const session = await auth();
 
   if (session) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-8">
+      <div className="relative flex min-h-screen flex-col items-center justify-center gap-4 p-8">
+        <div className="absolute right-4 top-4">
+          <ThemeToggle />
+        </div>
         <div className="rounded-2xl bg-card-bg px-8 py-6 shadow-(--shadow-soft)">
           <p className="text-lg text-foreground-soft">You are already signed in.</p>
           <a
@@ -22,7 +26,10 @@ export default async function SignInPage() {
   const hasResend = Boolean(process.env.RESEND_API_KEY);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-8 p-8">
+    <div className="relative flex min-h-screen flex-col items-center justify-center gap-8 p-8">
+      <div className="absolute right-4 top-4">
+        <ThemeToggle />
+      </div>
       <div className="w-full max-w-sm rounded-2xl bg-card-bg p-6 shadow-(--shadow-soft)">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
           Sign in to POTS Tracker

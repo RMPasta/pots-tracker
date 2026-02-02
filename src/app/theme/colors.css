@@ -1,6 +1,7 @@
 /**
  * Kawaii pastel theme – single source of truth for Tailwind custom colors.
- * Reference: dreamy sky – very light baby blue at top, subtle lavender-pink at bottom. Light mode only for now.
+ * Reference: dreamy sky – very light baby blue at top, subtle lavender-pink at bottom.
+ * Dark mode: thicker pastel purple background, light pastel panels (toggle sets data-theme="dark").
  */
 
 :root {
@@ -45,23 +46,21 @@
   --radius-soft: 1rem;
 }
 
-/* Dark mode deferred – use same light sky for now; add thicker-pastel dark mode later */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-page-bg-start: #e4f2fc;
-    --color-page-bg-end: #f8eef8;
-    --color-page-bg: #e4f2fc;
-    --color-card: #ffffff;
-    --color-btn-primary: #ffd8e8;
-    --color-btn-primary-hover: #fce0ef;
-    --color-btn-secondary: #fff8d0;
-    --color-btn-secondary-hover: #fffac0;
-    --color-btn-outline: #e8d0f8;
-    --color-input-bg: #ffffff;
-    --color-input-text: #171717;
-    --color-input-placeholder: #6b7280;
-    --shadow-soft: 0 2px 12px rgba(248, 176, 208, 0.12);
-  }
+/* Dark mode – thicker pastel purple background, light pastel panels (toggle via [data-theme="dark"]) */
+[data-theme='dark'] {
+  --color-page-bg-start: #4a3f6d;
+  --color-page-bg-end: #3d3552;
+  --color-page-bg: #4a3f6d;
+  --color-card: #f0e8f8;
+  --color-btn-primary: #ffd8e8;
+  --color-btn-primary-hover: #fce0ef;
+  --color-btn-secondary: #fff8d0;
+  --color-btn-secondary-hover: #fffac0;
+  --color-btn-outline: #e8d0f8;
+  --color-input-bg: #ffffff;
+  --color-input-text: #171717;
+  --color-input-placeholder: #6b7280;
+  --shadow-soft: 0 2px 16px rgba(0, 0, 0, 0.15);
 }
 
 @theme inline {
