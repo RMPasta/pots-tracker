@@ -25,24 +25,29 @@ export default async function ReportDetailPage({
     notFound();
   }
 
-  let incidents: Awaited<ReturnType<typeof prisma.incident.findMany>> = [];
+  const startOfDay = new Date(
+    Date.UTC(
+      report.date.getUTCFullYear(),
+      report.date.getUTCMonth(),
+      report.date.getUTCDate()
+    )
+  );
+  const incidents = await prisma.incident.findMany({
+    where: {
+      userId: session.user.id,
+      date: startOfDay,
+    },
+    orderBy: [{ time: 'asc' }, { createdAt: 'asc' }],
+  });
 
-  if (report.source === 'compiled') {
-    const startOfDay = new Date(
-      Date.UTC(
-        report.date.getUTCFullYear(),
-        report.date.getUTCMonth(),
-        report.date.getUTCDate()
-      )
-    );
-    incidents = await prisma.incident.findMany({
-      where: {
-        userId: session.user.id,
-        date: startOfDay,
-      },
-      orderBy: [{ time: 'asc' }, { createdAt: 'asc' }],
-    });
-  }
+  const hasDailyLogContent =
+    (report.diet != null && report.diet !== '') ||
+    (report.exercise != null && report.exercise !== '') ||
+    (report.medicine != null && report.medicine !== '') ||
+    (report.feelingMorning != null && report.feelingMorning !== '') ||
+    (report.feelingAfternoon != null && report.feelingAfternoon !== '') ||
+    (report.feelingNight != null && report.feelingNight !== '') ||
+    report.overallRating != null;
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
@@ -72,18 +77,20 @@ export default async function ReportDetailPage({
               : 'Daily log'}
           </p>
 
-          {report.source === 'full_log' && (
-            <p className="mt-2">
-              <Link
-                href={`/dashboard/history/${report.id}/edit`}
-                className="text-sm font-medium text-pastel-outline-pink underline hover:opacity-90"
-              >
-                Edit report
-              </Link>
-            </p>
-          )}
+          <p className="mt-2">
+            <Link
+              href={`/dashboard/history/${report.id}/edit`}
+              className="text-sm font-medium text-pastel-outline-pink underline hover:opacity-90"
+            >
+              {report.source === 'full_log'
+                ? 'Edit report'
+                : hasDailyLogContent
+                  ? 'Edit daily log'
+                  : 'Add daily log'}
+            </Link>
+          </p>
 
-          {report.source === 'full_log' && (
+          {hasDailyLogContent && (
             <div className="mt-6 space-y-4">
               {report.diet != null && report.diet !== '' && (
                 <div>
@@ -158,7 +165,7 @@ export default async function ReportDetailPage({
             </div>
           )}
 
-          {report.source === 'compiled' && incidents.length > 0 && (
+          {incidents.length > 0 && (
             <div className="mt-6">
               <h3 className="text-sm font-medium text-foreground-soft/80">
                 Incidents
@@ -200,7 +207,7 @@ export default async function ReportDetailPage({
             </div>
           )}
 
-          {report.source === 'compiled' && incidents.length === 0 && (
+          {incidents.length === 0 && (
             <p className="mt-4 text-sm text-foreground-soft/70">
               No incidents for this day.
             </p>

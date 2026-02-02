@@ -8,15 +8,40 @@ import { todayStartUTC } from '@/lib/dates';
 
 const DEFAULT_DAYS = 90;
 
-function reportSummary(report: {
-  source: string;
-  overallFeeling: string | null;
+function reportSummary(
+  report: { overallRating: number | null },
+  incidentCount: number
+): string {
+  const rating =
+    report.overallRating != null ? `${report.overallRating}/10` : null;
+  const incidents =
+    incidentCount > 0
+      ? `${incidentCount} incident${incidentCount === 1 ? '' : 's'}`
+      : null;
+  if (rating && incidents) return `${rating} · ${incidents}`;
+  if (rating) return rating;
+  if (incidents) return incidents;
+  return 'Daily log';
+}
+
+function hasDailyLogContent(report: {
+  diet: string | null;
+  exercise: string | null;
+  medicine: string | null;
+  feelingMorning: string | null;
+  feelingAfternoon: string | null;
+  feelingNight: string | null;
   overallRating: number | null;
-}): string {
-  if (report.source === 'compiled') {
-    return report.overallFeeling ?? 'Compiled from incidents';
-  }
-  return report.overallRating != null ? `${report.overallRating}/10` : 'Daily log';
+}): boolean {
+  return (
+    (report.diet != null && report.diet !== '') ||
+    (report.exercise != null && report.exercise !== '') ||
+    (report.medicine != null && report.medicine !== '') ||
+    (report.feelingMorning != null && report.feelingMorning !== '') ||
+    (report.feelingAfternoon != null && report.feelingAfternoon !== '') ||
+    (report.feelingNight != null && report.feelingNight !== '') ||
+    report.overallRating != null
+  );
 }
 
 export default async function HistoryPage() {
@@ -40,6 +65,26 @@ export default async function HistoryPage() {
     },
     orderBy: { date: 'desc' },
   });
+
+  function dateKey(d: Date): string {
+    return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+  }
+
+  const reportDates = reports.map((r) => r.date);
+  const incidentCounts =
+    reportDates.length > 0
+      ? await prisma.incident.groupBy({
+          by: ['date'],
+          where: {
+            userId: session.user.id,
+            date: { in: reportDates },
+          },
+          _count: { id: true },
+        })
+      : [];
+  const countByDate = new Map(
+    incidentCounts.map((row) => [dateKey(row.date), row._count.id])
+  );
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
@@ -75,17 +120,28 @@ export default async function HistoryPage() {
           <ul className="flex flex-col gap-3">
             {reports.map((report) => (
               <li key={report.id}>
-                <Link
-                  href={`/dashboard/history/${report.id}`}
-                  className="block rounded-2xl bg-card-bg p-3 shadow-(--shadow-soft) transition-colors hover:bg-pastel-mint/40 sm:p-4"
-                >
-                  <span className="font-medium text-foreground-soft">
-                    {formatCalendarDate(report.date)}
-                  </span>
-                  <p className="mt-1 truncate text-sm text-foreground-soft/80">
-                    {reportSummary(report)}
-                  </p>
-                </Link>
+                <div className="flex items-start justify-between gap-3 rounded-2xl bg-card-bg p-3 shadow-(--shadow-soft) transition-colors hover:bg-pastel-mint/40 sm:p-4">
+                  <Link
+                    href={`/dashboard/history/${report.id}`}
+                    className="min-w-0 flex-1"
+                  >
+                    <span className="font-medium text-foreground-soft">
+                      {formatCalendarDate(report.date)}
+                    </span>
+                    <p className="mt-1 truncate text-sm text-foreground-soft/80">
+                      {reportSummary(
+                        report,
+                        countByDate.get(dateKey(report.date)) ?? 0
+                      )}
+                    </p>
+                  </Link>
+                  <Link
+                    href={`/dashboard/history/${report.id}/edit`}
+                    className="shrink-0 text-sm font-medium text-pastel-outline-pink underline hover:opacity-90"
+                  >
+                    {hasDailyLogContent(report) ? 'Edit' : 'Add daily log'}
+                  </Link>
+                </div>
               </li>
             ))}
           </ul>
