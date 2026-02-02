@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --pastel-pink: #ffb6c1;
+  --pastel-purple: #e6e6fa;
+  --pastel-yellow: #fffacd;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-pastel-pink: var(--pastel-pink);
+  --color-pastel-purple: var(--pastel-purple);
+  --color-pastel-yellow: var(--pastel-yellow);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1a1a1a;
+    --foreground: #ededed;
+    --pastel-pink: #d48a94;
+    --pastel-purple: #b8b8d4;
+    --pastel-yellow: #e6e6a3;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
