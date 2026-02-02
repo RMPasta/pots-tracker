@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
 type DailyLogFormProps = {
@@ -47,6 +48,13 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
         return;
       }
 
+      setDate(() => {
+        const d = new Date();
+        return d.toISOString().slice(0, 10);
+      });
+      setSymptoms('');
+      setDietBehaviorNotes('');
+      setOverallFeeling('');
       setSuccess(true);
       onSuccess?.();
     } catch {
@@ -61,7 +69,15 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       <div className="rounded-2xl bg-btn-secondary/60 p-6 text-foreground-soft">
         <p className="font-medium">Daily log saved.</p>
         <p className="mt-1 text-sm text-foreground-soft/80">
-          You can <a href="/dashboard/history" className="underline">view history</a> or add another log.
+          You can <Link href="/dashboard/history" className="underline">view history</Link> or{' '}
+          <button
+            type="button"
+            onClick={() => setSuccess(false)}
+            className="cursor-pointer underline hover:opacity-90"
+          >
+            add another log
+          </button>
+          .
         </p>
       </div>
     );

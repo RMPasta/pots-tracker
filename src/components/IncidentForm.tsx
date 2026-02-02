@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
 type IncidentFormProps = {
@@ -50,6 +51,16 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
         return;
       }
 
+      setDate(() => {
+        const d = new Date();
+        return d.toISOString().slice(0, 10);
+      });
+      setTime(() => {
+        const d = new Date();
+        return d.toTimeString().slice(0, 5);
+      });
+      setSymptoms('');
+      setNotes('');
       setSuccess(true);
       onSuccess?.();
     } catch {
@@ -64,7 +75,15 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
       <div className="rounded-2xl bg-btn-secondary/60 p-6 text-foreground-soft">
         <p className="font-medium">Incident logged.</p>
         <p className="mt-1 text-sm text-foreground-soft/80">
-          You can <a href="/dashboard/history" className="underline">view history</a> or log another incident.
+          You can <Link href="/dashboard/history" className="underline">view history</Link> or{' '}
+          <button
+            type="button"
+            onClick={() => setSuccess(false)}
+            className="cursor-pointer underline hover:opacity-90"
+          >
+            log another incident
+          </button>
+          .
         </p>
       </div>
     );
