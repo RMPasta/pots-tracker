@@ -60,6 +60,9 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.2.3(@types/react@19.2.10)
+      baseline-browser-mapping:
+        specifier: ^2.9.19
+        version: 2.9.19
       dotenv:
         specifier: ^16.6.1
         version: 16.6.1
@@ -69,6 +72,9 @@ importers:
       eslint-config-next:
         specifier: 16.0.8
         version: 16.0.8(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      prettier:
+        specifier: ^3.8.1
+        version: 3.8.1
       tailwindcss:
         specifier: ^4
         version: 4.1.18

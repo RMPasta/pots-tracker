@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { auth, signOut } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import { LogFormView } from '@/components/LogFormView';
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -10,8 +12,10 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex min-h-screen flex-col gap-6 p-8">
-      <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight">POTS Tracker</h1>
+      <header className="flex items-center justify-between rounded-2xl bg-white/80 px-4 py-3 shadow-(--shadow-soft) dark:bg-pastel-purple/10">
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
+          POTS Tracker
+        </h1>
         <form
           action={async () => {
             'use server';
@@ -20,16 +24,25 @@ export default async function DashboardPage() {
         >
           <button
             type="submit"
-            className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
+            className="rounded-full border-2 border-pastel-pink/50 bg-pastel-pink/20 px-4 py-2 text-sm text-foreground-soft transition-colors hover:bg-pastel-pink/30"
           >
             Sign out
           </button>
         </form>
       </header>
       <main className="flex flex-1 flex-col gap-4">
-        <p className="text-zinc-600 dark:text-zinc-400">
-          Welcome back. Log your day or add an incident when you&apos;re ready.
-        </p>
+        <div className="rounded-2xl bg-white/80 p-6 shadow-(--shadow-soft) dark:bg-pastel-purple/10">
+          <p className="text-foreground-soft/90">
+            Welcome back. Log your day or add an incident when you&apos;re ready.
+          </p>
+          <Link
+            href="/dashboard/history"
+            className="mt-2 inline-block text-sm font-medium text-pastel-purple underline hover:opacity-90"
+          >
+            View history
+          </Link>
+        </div>
+        <LogFormView />
       </main>
     </div>
   );

@@ -3,14 +3,20 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --background-soft: #fef5f7;
+  --foreground-soft: #2d2a2a;
   --pastel-pink: #ffb6c1;
   --pastel-purple: #e6e6fa;
   --pastel-yellow: #fffacd;
+  --shadow-soft: 0 2px 8px rgba(255, 182, 193, 0.15);
+  --radius-soft: 1rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-background-soft: var(--background-soft);
+  --color-foreground-soft: var(--foreground-soft);
   --color-pastel-pink: var(--pastel-pink);
   --color-pastel-purple: var(--pastel-purple);
   --color-pastel-yellow: var(--pastel-yellow);
@@ -20,13 +26,17 @@
   :root {
     --background: #1a1a1a;
     --foreground: #ededed;
+    --background-soft: #252230;
+    --foreground-soft: #e8e4ec;
     --pastel-pink: #d48a94;
     --pastel-purple: #b8b8d4;
     --pastel-yellow: #e6e6a3;
+    --shadow-soft: 0 2px 8px rgba(184, 184, 212, 0.12);
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--background-soft);
+  color: var(--foreground-soft);
+  min-height: 100vh;
 }
