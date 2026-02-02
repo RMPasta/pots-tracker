@@ -1,24 +1,93 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { todayDateString } from '@/lib/dates';
 
 type DailyLogFormProps = {
   onSuccess?: () => void;
 };
 
+const inputClass =
+  'w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40';
+
 export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
-  const [date, setDate] = useState(() => {
-    const d = new Date();
-    return d.toISOString().slice(0, 10);
-  });
-  const [symptoms, setSymptoms] = useState('');
-  const [dietBehaviorNotes, setDietBehaviorNotes] = useState('');
-  const [overallFeeling, setOverallFeeling] = useState('');
+  const [date, setDate] = useState(todayDateString);
+  const [diet, setDiet] = useState('');
+  const [exercise, setExercise] = useState('');
+  const [medicine, setMedicine] = useState('');
+  const [feelingMorning, setFeelingMorning] = useState('');
+  const [feelingAfternoon, setFeelingAfternoon] = useState('');
+  const [feelingNight, setFeelingNight] = useState('');
+  const [overallRating, setOverallRating] = useState('');
+  const [editReportId, setEditReportId] = useState<string | null>(null);
+  const [loadingReport, setLoadingReport] = useState(true);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoadingReport(true);
+    setError(null);
+    fetch(`/api/reports?date=${date}`)
+      .then((res) => res.json())
+      .then((json) => {
+        if (cancelled) return;
+        if (!json.success) {
+          setEditReportId(null);
+          setDiet('');
+          setExercise('');
+          setMedicine('');
+          setFeelingMorning('');
+          setFeelingAfternoon('');
+          setFeelingNight('');
+          setOverallRating('');
+          return;
+        }
+        const report = json.data;
+        if (report?.source === 'full_log') {
+          setEditReportId(report.id);
+          setDiet(report.diet ?? '');
+          setExercise(report.exercise ?? '');
+          setMedicine(report.medicine ?? '');
+          setFeelingMorning(report.feelingMorning ?? '');
+          setFeelingAfternoon(report.feelingAfternoon ?? '');
+          setFeelingNight(report.feelingNight ?? '');
+          setOverallRating(
+            report.overallRating != null ? String(report.overallRating) : ''
+          );
+        } else {
+          setEditReportId(null);
+          setDiet('');
+          setExercise('');
+          setMedicine('');
+          setFeelingMorning('');
+          setFeelingAfternoon('');
+          setFeelingNight('');
+          setOverallRating('');
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setEditReportId(null);
+          setDiet('');
+          setExercise('');
+          setMedicine('');
+          setFeelingMorning('');
+          setFeelingAfternoon('');
+          setFeelingNight('');
+          setOverallRating('');
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingReport(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [date]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,35 +95,62 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
     setError(null);
     setFieldErrors({});
 
+    const ratingNum =
+      overallRating.trim() === '' ? undefined : parseInt(overallRating, 10);
+
     try {
-      const res = await fetch('/api/reports', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          date,
-          symptoms: symptoms || undefined,
-          dietBehaviorNotes: dietBehaviorNotes || undefined,
-          overallFeeling: overallFeeling || undefined,
-        }),
-      });
-
-      const json = await res.json();
-
-      if (!res.ok) {
-        if (json.error?.fields) {
-          setFieldErrors(json.error.fields);
+      if (editReportId) {
+        const res = await fetch(`/api/reports/${editReportId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            diet: diet || undefined,
+            exercise: exercise || undefined,
+            medicine: medicine || undefined,
+            feelingMorning: feelingMorning || undefined,
+            feelingAfternoon: feelingAfternoon || undefined,
+            feelingNight: feelingNight || undefined,
+            overallRating: ratingNum,
+          }),
+        });
+        const json = await res.json();
+        if (!res.ok) {
+          if (json.error?.fields) setFieldErrors(json.error.fields);
+          setError(json.error?.message ?? 'Something went wrong');
+          return;
         }
-        setError(json.error?.message ?? 'Something went wrong');
-        return;
+      } else {
+        const res = await fetch('/api/reports', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            date,
+            diet: diet || undefined,
+            exercise: exercise || undefined,
+            medicine: medicine || undefined,
+            feelingMorning: feelingMorning || undefined,
+            feelingAfternoon: feelingAfternoon || undefined,
+            feelingNight: feelingNight || undefined,
+            overallRating: ratingNum,
+          }),
+        });
+        const json = await res.json();
+        if (!res.ok) {
+          if (json.error?.fields) setFieldErrors(json.error.fields);
+          setError(json.error?.message ?? 'Something went wrong');
+          return;
+        }
       }
 
-      setDate(() => {
-        const d = new Date();
-        return d.toISOString().slice(0, 10);
-      });
-      setSymptoms('');
-      setDietBehaviorNotes('');
-      setOverallFeeling('');
+      setDate(todayDateString());
+      setEditReportId(null);
+      setDiet('');
+      setExercise('');
+      setMedicine('');
+      setFeelingMorning('');
+      setFeelingAfternoon('');
+      setFeelingNight('');
+      setOverallRating('');
       setSuccess(true);
       onSuccess?.();
     } catch {
@@ -91,6 +187,12 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
         </p>
       )}
 
+      {editReportId && (
+        <p className="text-sm text-foreground-soft/80">
+          Editing existing log for this date. Changes will update the saved log.
+        </p>
+      )}
+
       <div>
         <label htmlFor="daily-date" className="mb-1 block text-sm font-medium text-foreground-soft">
           Date
@@ -101,7 +203,8 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
+          disabled={loadingReport}
+          className={`${inputClass} disabled:opacity-60`}
         />
         {fieldErrors.date && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.date.join(', ')}</p>
@@ -109,62 +212,136 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       </div>
 
       <div>
-        <label htmlFor="daily-symptoms" className="mb-1 block text-sm font-medium text-foreground-soft">
-          Symptoms (optional)
-        </label>
-        <textarea
-          id="daily-symptoms"
-          value={symptoms}
-          onChange={(e) => setSymptoms(e.target.value)}
-          rows={3}
-          placeholder="e.g. dizziness, rapid heartbeat"
-          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
-        />
-        {fieldErrors.symptoms && (
-          <p className="mt-1 text-sm text-red-600">{fieldErrors.symptoms.join(', ')}</p>
-        )}
-      </div>
-
-      <div>
         <label htmlFor="daily-diet" className="mb-1 block text-sm font-medium text-foreground-soft">
-          Diet / behavior notes (optional)
+          Diet (optional)
         </label>
         <textarea
           id="daily-diet"
-          value={dietBehaviorNotes}
-          onChange={(e) => setDietBehaviorNotes(e.target.value)}
+          value={diet}
+          onChange={(e) => setDiet(e.target.value)}
           rows={2}
-          placeholder="What you ate or did"
-          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
+          placeholder="What you ate"
+          className={inputClass}
         />
-        {fieldErrors.dietBehaviorNotes && (
-          <p className="mt-1 text-sm text-red-600">{fieldErrors.dietBehaviorNotes.join(', ')}</p>
+        {fieldErrors.diet && (
+          <p className="mt-1 text-sm text-red-600">{fieldErrors.diet.join(', ')}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="daily-feeling" className="mb-1 block text-sm font-medium text-foreground-soft">
-          Overall feeling (optional)
+        <label htmlFor="daily-exercise" className="mb-1 block text-sm font-medium text-foreground-soft">
+          Exercise (optional)
+        </label>
+        <textarea
+          id="daily-exercise"
+          value={exercise}
+          onChange={(e) => setExercise(e.target.value)}
+          rows={2}
+          placeholder="What you did"
+          className={inputClass}
+        />
+        {fieldErrors.exercise && (
+          <p className="mt-1 text-sm text-red-600">{fieldErrors.exercise.join(', ')}</p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="daily-medicine" className="mb-1 block text-sm font-medium text-foreground-soft">
+          Medicine (optional)
+        </label>
+        <textarea
+          id="daily-medicine"
+          value={medicine}
+          onChange={(e) => setMedicine(e.target.value)}
+          rows={2}
+          placeholder="Medications or supplements"
+          className={inputClass}
+        />
+        {fieldErrors.medicine && (
+          <p className="mt-1 text-sm text-red-600">{fieldErrors.medicine.join(', ')}</p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="daily-feeling-morning" className="mb-1 block text-sm font-medium text-foreground-soft">
+          How I felt — morning (optional)
         </label>
         <input
-          id="daily-feeling"
+          id="daily-feeling-morning"
           type="text"
-          value={overallFeeling}
-          onChange={(e) => setOverallFeeling(e.target.value)}
-          placeholder="e.g. okay, rough morning"
-          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
+          value={feelingMorning}
+          onChange={(e) => setFeelingMorning(e.target.value)}
+          placeholder="e.g. okay, groggy"
+          className={inputClass}
         />
-        {fieldErrors.overallFeeling && (
-          <p className="mt-1 text-sm text-red-600">{fieldErrors.overallFeeling.join(', ')}</p>
+        {fieldErrors.feelingMorning && (
+          <p className="mt-1 text-sm text-red-600">{fieldErrors.feelingMorning.join(', ')}</p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="daily-feeling-afternoon" className="mb-1 block text-sm font-medium text-foreground-soft">
+          How I felt — afternoon (optional)
+        </label>
+        <input
+          id="daily-feeling-afternoon"
+          type="text"
+          value={feelingAfternoon}
+          onChange={(e) => setFeelingAfternoon(e.target.value)}
+          placeholder="e.g. good, tired"
+          className={inputClass}
+        />
+        {fieldErrors.feelingAfternoon && (
+          <p className="mt-1 text-sm text-red-600">{fieldErrors.feelingAfternoon.join(', ')}</p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="daily-feeling-night" className="mb-1 block text-sm font-medium text-foreground-soft">
+          How I felt — night (optional)
+        </label>
+        <input
+          id="daily-feeling-night"
+          type="text"
+          value={feelingNight}
+          onChange={(e) => setFeelingNight(e.target.value)}
+          placeholder="e.g. worn out, calm"
+          className={inputClass}
+        />
+        {fieldErrors.feelingNight && (
+          <p className="mt-1 text-sm text-red-600">{fieldErrors.feelingNight.join(', ')}</p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="daily-rating" className="mb-1 block text-sm font-medium text-foreground-soft">
+          Overall rating (optional, 1–10)
+        </label>
+        <input
+          id="daily-rating"
+          type="number"
+          min={1}
+          max={10}
+          value={overallRating}
+          onChange={(e) => setOverallRating(e.target.value)}
+          placeholder="1–10"
+          className={inputClass}
+        />
+        {fieldErrors.overallRating && (
+          <p className="mt-1 text-sm text-red-600">{fieldErrors.overallRating.join(', ')}</p>
         )}
       </div>
 
       <button
         type="submit"
-        disabled={loading}
+        disabled={loading || loadingReport}
         className="rounded-full bg-btn-primary px-6 py-3 font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover disabled:opacity-50"
       >
-        {loading ? 'Saving…' : 'Save daily log'}
+        {loading
+          ? 'Saving…'
+          : editReportId
+            ? 'Update daily log'
+            : 'Save daily log'}
       </button>
     </form>
   );

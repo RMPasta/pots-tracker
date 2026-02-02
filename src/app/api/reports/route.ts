@@ -3,6 +3,8 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { validate } from '@/lib/validation';
 import { reportCreateSchema } from '@/lib/schemas/reports';
+import { parseCalendarDateUTC } from '@/lib/dates';
+import { todayStartUTC } from '@/lib/dates';
 import { handleError } from '@/lib/errors';
 import { ValidationError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
@@ -20,17 +22,41 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const { searchParams } = new URL(request.url);
+    const dateParam = searchParams.get('date');
     const fromParam = searchParams.get('from');
     const toParam = searchParams.get('to');
 
-    const now = new Date();
-    const toDate = toParam ? new Date(toParam) : now;
-    const fromDate = fromParam
-      ? new Date(fromParam)
-      : new Date(now.getTime() - DEFAULT_DAYS * 24 * 60 * 60 * 1000);
+    if (dateParam) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dateParam)) {
+        return NextResponse.json(
+          { success: false, error: { message: 'Invalid date parameter' } },
+          { status: 400 }
+        );
+      }
+      const startOfDay = parseCalendarDateUTC(dateParam);
+      const report = await prisma.dailyReport.findUnique({
+        where: {
+          userId_date: { userId: session.user.id, date: startOfDay },
+        },
+      });
+      return NextResponse.json({ success: true, data: report });
+    }
 
-    const start = new Date(Date.UTC(fromDate.getUTCFullYear(), fromDate.getUTCMonth(), fromDate.getUTCDate()));
-    const end = new Date(Date.UTC(toDate.getUTCFullYear(), toDate.getUTCMonth(), toDate.getUTCDate()));
+    const now = new Date();
+    const end =
+      toParam && /^\d{4}-\d{2}-\d{2}$/.test(toParam)
+        ? parseCalendarDateUTC(toParam)
+        : todayStartUTC();
+    let start: Date;
+    if (fromParam && /^\d{4}-\d{2}-\d{2}$/.test(fromParam)) {
+      start = parseCalendarDateUTC(fromParam);
+    } else {
+      const from = new Date(now);
+      from.setDate(from.getDate() - DEFAULT_DAYS);
+      start = new Date(
+        Date.UTC(from.getFullYear(), from.getMonth(), from.getDate())
+      );
+    }
 
     const reports = await prisma.dailyReport.findMany({
       where: {
@@ -84,14 +110,23 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         userId: session.user.id,
         date: data.date,
         source: 'full_log',
-        symptoms: data.symptoms ?? null,
-        dietBehaviorNotes: data.dietBehaviorNotes ?? null,
-        overallFeeling: data.overallFeeling ?? null,
+        diet: data.diet ?? null,
+        exercise: data.exercise ?? null,
+        medicine: data.medicine ?? null,
+        feelingMorning: data.feelingMorning ?? null,
+        feelingAfternoon: data.feelingAfternoon ?? null,
+        feelingNight: data.feelingNight ?? null,
+        overallRating: data.overallRating ?? null,
       },
       update: {
-        symptoms: data.symptoms ?? null,
-        dietBehaviorNotes: data.dietBehaviorNotes ?? null,
-        overallFeeling: data.overallFeeling ?? null,
+        source: 'full_log',
+        diet: data.diet ?? null,
+        exercise: data.exercise ?? null,
+        medicine: data.medicine ?? null,
+        feelingMorning: data.feelingMorning ?? null,
+        feelingAfternoon: data.feelingAfternoon ?? null,
+        feelingNight: data.feelingNight ?? null,
+        overallRating: data.overallRating ?? null,
       },
     });
 

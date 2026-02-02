@@ -1,23 +1,33 @@
 'use client';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { todayDateString } from '@/lib/dates';
 
-type IncidentFormProps = {
-  onSuccess?: () => void;
+type Incident = {
+  id: string;
+  date: Date;
+  time: string | null;
+  symptoms: string | null;
+  notes: string | null;
 };
 
-export function IncidentForm({ onSuccess }: IncidentFormProps) {
-  const [date, setDate] = useState(todayDateString);
-  const [time, setTime] = useState(() => {
-    const d = new Date();
-    return d.toTimeString().slice(0, 5);
-  });
-  const [symptoms, setSymptoms] = useState('');
-  const [notes, setNotes] = useState('');
+type IncidentEditFormProps = {
+  incident: Incident;
+  returnTo?: string | null;
+};
+
+function dateToInputValue(d: Date): string {
+  const x = new Date(d);
+  return `${x.getUTCFullYear()}-${String(x.getUTCMonth() + 1).padStart(2, '0')}-${String(x.getUTCDate()).padStart(2, '0')}`;
+}
+
+export function IncidentEditForm({ incident, returnTo }: IncidentEditFormProps) {
+  const router = useRouter();
+  const [date, setDate] = useState(() => dateToInputValue(incident.date));
+  const [time, setTime] = useState(incident.time ?? '');
+  const [symptoms, setSymptoms] = useState(incident.symptoms ?? '');
+  const [notes, setNotes] = useState(incident.notes ?? '');
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
 
@@ -28,8 +38,8 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
     setFieldErrors({});
 
     try {
-      const res = await fetch('/api/incidents', {
-        method: 'POST',
+      const res = await fetch(`/api/incidents/${incident.id}`, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           date,
@@ -49,39 +59,12 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
         return;
       }
 
-      setDate(todayDateString());
-      setTime(() => {
-        const d = new Date();
-        return d.toTimeString().slice(0, 5);
-      });
-      setSymptoms('');
-      setNotes('');
-      setSuccess(true);
-      onSuccess?.();
+      router.push(returnTo ?? '/dashboard/history');
     } catch {
       setError('Network error. Please try again.');
     } finally {
       setLoading(false);
     }
-  }
-
-  if (success) {
-    return (
-      <div className="rounded-2xl bg-btn-secondary/60 p-6 text-foreground-soft">
-        <p className="font-medium">Incident logged.</p>
-        <p className="mt-1 text-sm text-foreground-soft/80">
-          You can <Link href="/dashboard/history" className="underline">view history</Link> or{' '}
-          <button
-            type="button"
-            onClick={() => setSuccess(false)}
-            className="cursor-pointer underline hover:opacity-90"
-          >
-            log another incident
-          </button>
-          .
-        </p>
-      </div>
-    );
   }
 
   return (
@@ -94,11 +77,14 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="incident-date" className="mb-1 block text-sm font-medium text-foreground-soft">
+          <label
+            htmlFor="incident-edit-date"
+            className="mb-1 block text-sm font-medium text-foreground-soft"
+          >
             Date
           </label>
           <input
-            id="incident-date"
+            id="incident-edit-date"
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
@@ -110,11 +96,14 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
           )}
         </div>
         <div>
-          <label htmlFor="incident-time" className="mb-1 block text-sm font-medium text-foreground-soft">
+          <label
+            htmlFor="incident-edit-time"
+            className="mb-1 block text-sm font-medium text-foreground-soft"
+          >
             Time (optional)
           </label>
           <input
-            id="incident-time"
+            id="incident-edit-time"
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
@@ -127,11 +116,14 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
       </div>
 
       <div>
-        <label htmlFor="incident-symptoms" className="mb-1 block text-sm font-medium text-foreground-soft">
+        <label
+          htmlFor="incident-edit-symptoms"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
           Symptoms (optional)
         </label>
         <textarea
-          id="incident-symptoms"
+          id="incident-edit-symptoms"
           value={symptoms}
           onChange={(e) => setSymptoms(e.target.value)}
           rows={2}
@@ -144,11 +136,14 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
       </div>
 
       <div>
-        <label htmlFor="incident-notes" className="mb-1 block text-sm font-medium text-foreground-soft">
+        <label
+          htmlFor="incident-edit-notes"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
           Notes (optional)
         </label>
         <textarea
-          id="incident-notes"
+          id="incident-edit-notes"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={2}
@@ -165,7 +160,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
         disabled={loading}
         className="rounded-full bg-btn-outline px-6 py-3 font-medium text-foreground-soft transition-colors hover:opacity-90 disabled:opacity-50"
       >
-        {loading ? 'Saving…' : 'Log incident'}
+        {loading ? 'Saving…' : 'Save changes'}
       </button>
     </form>
   );

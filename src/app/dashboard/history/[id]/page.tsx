@@ -3,14 +3,7 @@ import { auth } from '@/lib/auth';
 import { redirect, notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { ThemeToggle } from '@/components/ThemeToggle';
-
-function formatDate(d: Date): string {
-  return new Date(d).toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
+import { formatCalendarDate } from '@/lib/dates';
 
 export default async function ReportDetailPage({
   params,
@@ -52,8 +45,8 @@ export default async function ReportDetailPage({
   }
 
   return (
-    <div className="flex min-h-screen flex-col gap-6 p-8">
-      <header className="flex items-center justify-between rounded-2xl bg-card-bg px-4 py-3 shadow-(--shadow-soft)">
+    <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
+      <header className="flex items-center justify-between rounded-2xl bg-card-bg px-3 py-2.5 shadow-(--shadow-soft) sm:px-4 sm:py-3">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
           POTS Tracker
         </h1>
@@ -69,9 +62,9 @@ export default async function ReportDetailPage({
       </header>
 
       <main className="flex flex-1 flex-col gap-4">
-        <div className="rounded-2xl bg-card-bg p-6 shadow-(--shadow-soft)">
+        <div className="rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) sm:p-5">
           <h2 className="text-lg font-medium text-foreground-soft">
-            {formatDate(report.date)}
+            {formatCalendarDate(report.date)}
           </h2>
           <p className="mt-1 text-sm text-foreground-soft/70">
             {report.source === 'compiled'
@@ -80,34 +73,85 @@ export default async function ReportDetailPage({
           </p>
 
           {report.source === 'full_log' && (
+            <p className="mt-2">
+              <Link
+                href={`/dashboard/history/${report.id}/edit`}
+                className="text-sm font-medium text-pastel-outline-pink underline hover:opacity-90"
+              >
+                Edit report
+              </Link>
+            </p>
+          )}
+
+          {report.source === 'full_log' && (
             <div className="mt-6 space-y-4">
-              {report.symptoms && (
+              {report.diet != null && report.diet !== '' && (
                 <div>
                   <h3 className="text-sm font-medium text-foreground-soft/80">
-                    Symptoms
+                    Diet
                   </h3>
                   <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
-                    {report.symptoms}
+                    {report.diet}
                   </p>
                 </div>
               )}
-              {report.dietBehaviorNotes && (
+              {report.exercise != null && report.exercise !== '' && (
                 <div>
                   <h3 className="text-sm font-medium text-foreground-soft/80">
-                    Diet / behavior notes
+                    Exercise
                   </h3>
                   <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
-                    {report.dietBehaviorNotes}
+                    {report.exercise}
                   </p>
                 </div>
               )}
-              {report.overallFeeling && (
+              {report.medicine != null && report.medicine !== '' && (
                 <div>
                   <h3 className="text-sm font-medium text-foreground-soft/80">
-                    Overall feeling
+                    Medicine
+                  </h3>
+                  <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
+                    {report.medicine}
+                  </p>
+                </div>
+              )}
+              {report.feelingMorning != null && report.feelingMorning !== '' && (
+                <div>
+                  <h3 className="text-sm font-medium text-foreground-soft/80">
+                    How I felt — morning
                   </h3>
                   <p className="mt-1 text-foreground-soft/90">
-                    {report.overallFeeling}
+                    {report.feelingMorning}
+                  </p>
+                </div>
+              )}
+              {report.feelingAfternoon != null && report.feelingAfternoon !== '' && (
+                <div>
+                  <h3 className="text-sm font-medium text-foreground-soft/80">
+                    How I felt — afternoon
+                  </h3>
+                  <p className="mt-1 text-foreground-soft/90">
+                    {report.feelingAfternoon}
+                  </p>
+                </div>
+              )}
+              {report.feelingNight != null && report.feelingNight !== '' && (
+                <div>
+                  <h3 className="text-sm font-medium text-foreground-soft/80">
+                    How I felt — night
+                  </h3>
+                  <p className="mt-1 text-foreground-soft/90">
+                    {report.feelingNight}
+                  </p>
+                </div>
+              )}
+              {report.overallRating != null && (
+                <div>
+                  <h3 className="text-sm font-medium text-foreground-soft/80">
+                    Overall rating
+                  </h3>
+                  <p className="mt-1 text-foreground-soft/90">
+                    {report.overallRating}/10
                   </p>
                 </div>
               )}
@@ -123,23 +167,33 @@ export default async function ReportDetailPage({
                 {incidents.map((incident) => (
                   <li
                     key={incident.id}
-                    className="rounded-xl border border-pastel-outline-pink/40 bg-pastel-yellow/30 p-4"
+                    className="rounded-xl border border-pastel-outline-pink/40 bg-pastel-yellow/30 p-3 sm:p-4"
                   >
-                    {incident.time && (
-                      <p className="text-sm font-medium text-foreground-soft/80">
-                        {incident.time}
-                      </p>
-                    )}
-                    {incident.symptoms && (
-                      <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
-                        {incident.symptoms}
-                      </p>
-                    )}
-                    {incident.notes && (
-                      <p className="mt-1 text-sm text-foreground-soft/70">
-                        {incident.notes}
-                      </p>
-                    )}
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        {incident.time && (
+                          <p className="text-sm font-medium text-foreground-soft/80">
+                            {incident.time}
+                          </p>
+                        )}
+                        {incident.symptoms && (
+                          <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
+                            {incident.symptoms}
+                          </p>
+                        )}
+                        {incident.notes && (
+                          <p className="mt-1 text-sm text-foreground-soft/70">
+                            {incident.notes}
+                          </p>
+                        )}
+                      </div>
+                      <Link
+                        href={`/dashboard/incidents/${incident.id}/edit?returnTo=${encodeURIComponent(`/dashboard/history/${report.id}`)}`}
+                        className="shrink-0 text-sm font-medium text-pastel-outline-pink underline hover:opacity-90"
+                      >
+                        Edit
+                      </Link>
+                    </div>
                   </li>
                 ))}
               </ul>

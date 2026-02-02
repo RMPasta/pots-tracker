@@ -9,11 +9,11 @@ import Link from 'next/link';
 type Mode = 'daily' | 'incident';
 
 export function LogFormView() {
-  const [mode, setMode] = useState<Mode>('daily');
+  const [mode, setMode] = useState<Mode>('incident');
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-4 sm:gap-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <LogTypeToggle value={mode} onChange={setMode} />
         <Link
           href="/dashboard/history"
@@ -23,7 +23,7 @@ export function LogFormView() {
         </Link>
       </div>
 
-      <div className="rounded-2xl bg-card-bg p-6 shadow-(--shadow-soft)">
+      <div className="rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) sm:p-5">
         {mode === 'daily' ? <DailyLogForm /> : <IncidentForm />}
       </div>
     </div>

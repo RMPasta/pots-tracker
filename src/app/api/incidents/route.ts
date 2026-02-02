@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { validate } from '@/lib/validation';
 import { incidentCreateSchema } from '@/lib/schemas/reports';
+import { parseCalendarDateUTC } from '@/lib/dates';
 import { compileDayReport } from '@/lib/compileDayReport';
 import { handleError } from '@/lib/errors';
 import { ValidationError } from '@/lib/errors';
@@ -85,9 +86,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       userId: session.user.id,
     };
 
-    if (dateParam) {
-      const d = new Date(dateParam);
-      const start = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+    if (dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam)) {
+      const start = parseCalendarDateUTC(dateParam);
       where.date = { gte: start, lte: start };
     } else if (fromParam || toParam) {
       const gte = fromParam

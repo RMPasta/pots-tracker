@@ -71,6 +71,13 @@ model DailyReport {
   symptoms          String?  @db.Text
   dietBehaviorNotes String?  @db.Text
   overallFeeling    String?
+  diet              String?  @db.Text
+  exercise          String?  @db.Text
+  medicine          String?  @db.Text
+  feelingMorning    String?  @db.Text
+  feelingAfternoon  String?  @db.Text
+  feelingNight      String?  @db.Text
+  overallRating     Int?
   source            String   @default("full_log")
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt

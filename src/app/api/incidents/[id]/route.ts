@@ -2,10 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { validate } from '@/lib/validation';
-import { reportUpdateSchema } from '@/lib/schemas/reports';
+import { incidentCreateSchema } from '@/lib/schemas/reports';
+import { compileDayReport } from '@/lib/compileDayReport';
 import { handleError } from '@/lib/errors';
 import { NotFoundError, ValidationError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
+
+function startOfDay(d: Date): Date {
+  return new Date(
+    Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())
+  );
+}
 
 export async function GET(
   _request: NextRequest,
@@ -22,37 +29,15 @@ export async function GET(
 
     const { id } = await params;
 
-    const report = await prisma.dailyReport.findFirst({
+    const incident = await prisma.incident.findFirst({
       where: { id, userId: session.user.id },
     });
 
-    if (!report) {
-      throw new NotFoundError('Report', id);
+    if (!incident) {
+      throw new NotFoundError('Incident', id);
     }
 
-    let incidents: Awaited<ReturnType<typeof prisma.incident.findMany>> | undefined;
-
-    if (report.source === 'compiled') {
-      const startOfDay = new Date(
-        Date.UTC(
-          report.date.getUTCFullYear(),
-          report.date.getUTCMonth(),
-          report.date.getUTCDate()
-        )
-      );
-      incidents = await prisma.incident.findMany({
-        where: {
-          userId: session.user.id,
-          date: startOfDay,
-        },
-        orderBy: [{ time: 'asc' }, { createdAt: 'asc' }],
-      });
-    }
-
-    return NextResponse.json({
-      success: true,
-      data: { ...report, incidents: incidents ?? [] },
-    });
+    return NextResponse.json({ success: true, data: incident });
   } catch (error) {
     if (error instanceof NotFoundError) {
       return NextResponse.json(
@@ -67,9 +52,9 @@ export async function GET(
       );
     }
     const errorInfo = handleError(error);
-    logger.error('GET /api/reports/[id] failed', {
+    logger.error('GET /api/incidents/[id] failed', {
       error: error instanceof Error ? error : new Error(String(error)),
-      metadata: { route: 'api/reports/[id]' },
+      metadata: { route: 'api/incidents/[id]' },
     });
     return NextResponse.json(
       {
@@ -99,29 +84,43 @@ export async function PATCH(
 
     const { id } = await params;
 
-    const report = await prisma.dailyReport.findFirst({
+    const incident = await prisma.incident.findFirst({
       where: { id, userId: session.user.id },
     });
 
-    if (!report) {
-      throw new NotFoundError('Report', id);
+    if (!incident) {
+      throw new NotFoundError('Incident', id);
     }
 
     const body = await request.json();
-    const data = validate(reportUpdateSchema, body);
+    const data = validate(incidentCreateSchema, body);
 
-    const updated = await prisma.dailyReport.update({
+    const oldDate = startOfDay(incident.date);
+    const newDate = data.date;
+
+    const updated = await prisma.incident.update({
       where: { id },
       data: {
-        diet: data.diet ?? null,
-        exercise: data.exercise ?? null,
-        medicine: data.medicine ?? null,
-        feelingMorning: data.feelingMorning ?? null,
-        feelingAfternoon: data.feelingAfternoon ?? null,
-        feelingNight: data.feelingNight ?? null,
-        overallRating: data.overallRating ?? null,
+        date: newDate,
+        time: data.time ?? null,
+        symptoms: data.symptoms ?? null,
+        notes: data.notes ?? null,
       },
     });
+
+    await compileDayReport(session.user.id, newDate);
+    const sameDay =
+      oldDate.getTime() ===
+      new Date(
+        Date.UTC(
+          newDate.getUTCFullYear(),
+          newDate.getUTCMonth(),
+          newDate.getUTCDate()
+        )
+      ).getTime();
+    if (!sameDay) {
+      await compileDayReport(session.user.id, oldDate);
+    }
 
     return NextResponse.json({ success: true, data: updated });
   } catch (error) {
@@ -151,9 +150,9 @@ export async function PATCH(
       );
     }
     const errorInfo = handleError(error);
-    logger.error('PATCH /api/reports/[id] failed', {
+    logger.error('PATCH /api/incidents/[id] failed', {
       error: error instanceof Error ? error : new Error(String(error)),
-      metadata: { route: 'api/reports/[id]' },
+      metadata: { route: 'api/incidents/[id]' },
     });
     return NextResponse.json(
       {
