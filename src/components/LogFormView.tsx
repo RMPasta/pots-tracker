@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { LogTypeToggle } from './LogTypeToggle';
+import { LogTypeToggle, type Mode } from './LogTypeToggle';
 import { DailyLogForm } from './DailyLogForm';
 import { IncidentForm } from './IncidentForm';
+import { ExportForm } from './ExportForm';
+import { AnalysisPanel } from './AnalysisPanel';
 import Link from 'next/link';
-
-type Mode = 'daily' | 'incident';
 
 export function LogFormView() {
   const [mode, setMode] = useState<Mode>('incident');
@@ -23,9 +23,13 @@ export function LogFormView() {
         </Link>
       </div>
 
-      <div className="rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) sm:p-5">
-        {mode === 'daily' ? <DailyLogForm /> : <IncidentForm />}
-      </div>
+      {mode === 'export' && <ExportForm />}
+      {mode === 'insights' && <AnalysisPanel />}
+      {(mode === 'daily' || mode === 'incident') && (
+        <div className="rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) sm:p-5">
+          {mode === 'daily' ? <DailyLogForm /> : <IncidentForm />}
+        </div>
+      )}
     </div>
   );
 }

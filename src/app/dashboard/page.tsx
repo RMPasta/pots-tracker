@@ -3,8 +3,6 @@ import { auth, signOut } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { LogFormView } from '@/components/LogFormView';
 import { OnOpenMessage } from '@/components/OnOpenMessage';
-import { ExportForm } from '@/components/ExportForm';
-import { AnalysisPanel } from '@/components/AnalysisPanel';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default async function DashboardPage() {
@@ -37,8 +35,6 @@ export default async function DashboardPage() {
       </header>
       <main className="flex flex-1 flex-col gap-4">
         <OnOpenMessage userName={session.user?.name ?? session.user?.email ?? 'there'} />
-        <ExportForm />
-        <AnalysisPanel />
         <LogFormView />
       </main>
     </div>
