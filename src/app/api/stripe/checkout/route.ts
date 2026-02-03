@@ -64,7 +64,7 @@ export async function POST(): Promise<NextResponse> {
       mode: 'subscription',
       line_items: [{ price: priceId, quantity: 1 }],
       success_url: `${baseUrl}/dashboard?subscription=success`,
-      cancel_url: `${baseUrl}/dashboard?subscription=canceled`,
+      cancel_url: `${baseUrl}/pricing?canceled=1`,
       client_reference_id: session.user.id,
     });
 
