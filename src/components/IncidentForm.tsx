@@ -70,7 +70,11 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
       <div className="rounded-2xl bg-btn-secondary/60 p-6 text-foreground-soft">
         <p className="font-medium">Incident logged.</p>
         <p className="mt-1 text-sm text-foreground-soft/80">
-          You can <Link href="/dashboard/history" className="underline">view history</Link> or{' '}
+          You can{' '}
+          <Link href="/dashboard/history" className="underline">
+            view history
+          </Link>{' '}
+          or{' '}
           <button
             type="button"
             onClick={() => setSuccess(false)}
@@ -94,7 +98,10 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="incident-date" className="mb-1 block text-sm font-medium text-foreground-soft">
+          <label
+            htmlFor="incident-date"
+            className="mb-1 block text-sm font-medium text-foreground-soft"
+          >
             Date
           </label>
           <input
@@ -110,7 +117,10 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
           )}
         </div>
         <div>
-          <label htmlFor="incident-time" className="mb-1 block text-sm font-medium text-foreground-soft">
+          <label
+            htmlFor="incident-time"
+            className="mb-1 block text-sm font-medium text-foreground-soft"
+          >
             Time (optional)
           </label>
           <input
@@ -127,7 +137,10 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
       </div>
 
       <div>
-        <label htmlFor="incident-symptoms" className="mb-1 block text-sm font-medium text-foreground-soft">
+        <label
+          htmlFor="incident-symptoms"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
           Symptoms (optional)
         </label>
         <textarea
@@ -144,7 +157,10 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
       </div>
 
       <div>
-        <label htmlFor="incident-notes" className="mb-1 block text-sm font-medium text-foreground-soft">
+        <label
+          htmlFor="incident-notes"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
           Notes (optional)
         </label>
         <textarea

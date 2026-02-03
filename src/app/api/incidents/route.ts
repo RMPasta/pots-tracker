@@ -91,10 +91,18 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       where.date = { gte: start, lte: start };
     } else if (fromParam || toParam) {
       const gte = fromParam
-        ? new Date(Date.UTC(new Date(fromParam).getUTCFullYear(), new Date(fromParam).getUTCMonth(), new Date(fromParam).getUTCDate()))
+        ? new Date(
+            Date.UTC(
+              new Date(fromParam).getUTCFullYear(),
+              new Date(fromParam).getUTCMonth(),
+              new Date(fromParam).getUTCDate()
+            )
+          )
         : undefined;
       const toDate = toParam ? new Date(toParam) : new Date();
-      const lte = new Date(Date.UTC(toDate.getUTCFullYear(), toDate.getUTCMonth(), toDate.getUTCDate()));
+      const lte = new Date(
+        Date.UTC(toDate.getUTCFullYear(), toDate.getUTCMonth(), toDate.getUTCDate())
+      );
       where.date = { ...(gte && { gte }), lte };
     }
 

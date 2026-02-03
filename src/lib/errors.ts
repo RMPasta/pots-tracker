@@ -41,7 +41,10 @@ export class ForbiddenError extends AppError {
 }
 
 export class RateLimitError extends AppError {
-  constructor(message: string = 'Rate limit exceeded', public resetAt?: Date) {
+  constructor(
+    message: string = 'Rate limit exceeded',
+    public resetAt?: Date
+  ) {
     super(message, 429, 'RATE_LIMIT_EXCEEDED');
     this.name = 'RateLimitError';
   }

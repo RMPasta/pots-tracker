@@ -48,10 +48,7 @@ export default async function SignInPage() {
                 }}
                 className="flex flex-col gap-3"
               >
-                <label
-                  htmlFor="email"
-                  className="text-sm font-medium text-foreground-soft"
-                >
+                <label htmlFor="email" className="text-sm font-medium text-foreground-soft">
                   Email (magic link)
                 </label>
                 <input
@@ -75,9 +72,7 @@ export default async function SignInPage() {
                   <span className="w-full border-t border-pastel-outline-pink/40" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="bg-card-bg px-2 text-foreground-soft/80">
-                    or
-                  </span>
+                  <span className="bg-card-bg px-2 text-foreground-soft/80">or</span>
                 </div>
               </div>
             </>

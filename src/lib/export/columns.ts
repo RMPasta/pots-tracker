@@ -46,8 +46,7 @@ const dailyColumns: ExportColumn[] = [
   {
     key: 'overallRating',
     label: 'Overall rating',
-    getValue: (r) =>
-      r.overallRating != null ? String(r.overallRating) : '',
+    getValue: (r) => (r.overallRating != null ? String(r.overallRating) : ''),
   },
 ];
 

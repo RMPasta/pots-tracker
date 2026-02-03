@@ -53,9 +53,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     } else {
       const from = new Date(now);
       from.setDate(from.getDate() - DEFAULT_DAYS);
-      start = new Date(
-        Date.UTC(from.getFullYear(), from.getMonth(), from.getDate())
-      );
+      start = new Date(Date.UTC(from.getFullYear(), from.getMonth(), from.getDate()));
     }
 
     const reports = await prisma.dailyReport.findMany({

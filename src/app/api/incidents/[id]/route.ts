@@ -9,9 +9,7 @@ import { NotFoundError, ValidationError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
 
 function startOfDay(d: Date): Date {
-  return new Date(
-    Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())
-  );
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
 }
 
 export async function GET(
@@ -112,11 +110,7 @@ export async function PATCH(
     const sameDay =
       oldDate.getTime() ===
       new Date(
-        Date.UTC(
-          newDate.getUTCFullYear(),
-          newDate.getUTCMonth(),
-          newDate.getUTCDate()
-        )
+        Date.UTC(newDate.getUTCFullYear(), newDate.getUTCMonth(), newDate.getUTCDate())
       ).getTime();
     if (!sameDay) {
       await compileDayReport(session.user.id, oldDate);

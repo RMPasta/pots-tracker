@@ -5,11 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { formatCalendarDate } from '@/lib/dates';
 
-export default async function ReportDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function ReportDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
   if (!session) {
     redirect('/auth/signin');
@@ -26,11 +22,7 @@ export default async function ReportDetailPage({
   }
 
   const startOfDay = new Date(
-    Date.UTC(
-      report.date.getUTCFullYear(),
-      report.date.getUTCMonth(),
-      report.date.getUTCDate()
-    )
+    Date.UTC(report.date.getUTCFullYear(), report.date.getUTCMonth(), report.date.getUTCDate())
   );
   const incidents = await prisma.incident.findMany({
     where: {
@@ -52,9 +44,7 @@ export default async function ReportDetailPage({
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
       <header className="flex items-center justify-between rounded-2xl bg-card-bg px-3 py-2.5 shadow-(--shadow-soft) sm:px-4 sm:py-3">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
-          POTS Tracker
-        </h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">POTS Tracker</h1>
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Link
@@ -94,19 +84,13 @@ export default async function ReportDetailPage({
             <div className="mt-6 space-y-4">
               {report.diet != null && report.diet !== '' && (
                 <div>
-                  <h3 className="text-sm font-medium text-foreground-soft/80">
-                    Diet
-                  </h3>
-                  <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
-                    {report.diet}
-                  </p>
+                  <h3 className="text-sm font-medium text-foreground-soft/80">Diet</h3>
+                  <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">{report.diet}</p>
                 </div>
               )}
               {report.exercise != null && report.exercise !== '' && (
                 <div>
-                  <h3 className="text-sm font-medium text-foreground-soft/80">
-                    Exercise
-                  </h3>
+                  <h3 className="text-sm font-medium text-foreground-soft/80">Exercise</h3>
                   <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
                     {report.exercise}
                   </p>
@@ -114,9 +98,7 @@ export default async function ReportDetailPage({
               )}
               {report.medicine != null && report.medicine !== '' && (
                 <div>
-                  <h3 className="text-sm font-medium text-foreground-soft/80">
-                    Medicine
-                  </h3>
+                  <h3 className="text-sm font-medium text-foreground-soft/80">Medicine</h3>
                   <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
                     {report.medicine}
                   </p>
@@ -127,9 +109,7 @@ export default async function ReportDetailPage({
                   <h3 className="text-sm font-medium text-foreground-soft/80">
                     How I felt — morning
                   </h3>
-                  <p className="mt-1 text-foreground-soft/90">
-                    {report.feelingMorning}
-                  </p>
+                  <p className="mt-1 text-foreground-soft/90">{report.feelingMorning}</p>
                 </div>
               )}
               {report.feelingAfternoon != null && report.feelingAfternoon !== '' && (
@@ -137,9 +117,7 @@ export default async function ReportDetailPage({
                   <h3 className="text-sm font-medium text-foreground-soft/80">
                     How I felt — afternoon
                   </h3>
-                  <p className="mt-1 text-foreground-soft/90">
-                    {report.feelingAfternoon}
-                  </p>
+                  <p className="mt-1 text-foreground-soft/90">{report.feelingAfternoon}</p>
                 </div>
               )}
               {report.feelingNight != null && report.feelingNight !== '' && (
@@ -147,19 +125,13 @@ export default async function ReportDetailPage({
                   <h3 className="text-sm font-medium text-foreground-soft/80">
                     How I felt — night
                   </h3>
-                  <p className="mt-1 text-foreground-soft/90">
-                    {report.feelingNight}
-                  </p>
+                  <p className="mt-1 text-foreground-soft/90">{report.feelingNight}</p>
                 </div>
               )}
               {report.overallRating != null && (
                 <div>
-                  <h3 className="text-sm font-medium text-foreground-soft/80">
-                    Overall rating
-                  </h3>
-                  <p className="mt-1 text-foreground-soft/90">
-                    {report.overallRating}/10
-                  </p>
+                  <h3 className="text-sm font-medium text-foreground-soft/80">Overall rating</h3>
+                  <p className="mt-1 text-foreground-soft/90">{report.overallRating}/10</p>
                 </div>
               )}
             </div>
@@ -167,9 +139,7 @@ export default async function ReportDetailPage({
 
           {incidents.length > 0 && (
             <div className="mt-6">
-              <h3 className="text-sm font-medium text-foreground-soft/80">
-                Incidents
-              </h3>
+              <h3 className="text-sm font-medium text-foreground-soft/80">Incidents</h3>
               <ul className="mt-3 space-y-4">
                 {incidents.map((incident) => (
                   <li
@@ -189,9 +159,7 @@ export default async function ReportDetailPage({
                           </p>
                         )}
                         {incident.notes && (
-                          <p className="mt-1 text-sm text-foreground-soft/70">
-                            {incident.notes}
-                          </p>
+                          <p className="mt-1 text-sm text-foreground-soft/70">{incident.notes}</p>
                         )}
                       </div>
                       <Link
@@ -208,9 +176,7 @@ export default async function ReportDetailPage({
           )}
 
           {incidents.length === 0 && (
-            <p className="mt-4 text-sm text-foreground-soft/70">
-              No incidents for this day.
-            </p>
+            <p className="mt-4 text-sm text-foreground-soft/70">No incidents for this day.</p>
           )}
         </div>
       </main>

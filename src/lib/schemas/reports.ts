@@ -8,9 +8,7 @@ const dateSchema = z
       return parseCalendarDateUTC(val);
     }
     const d = typeof val === 'string' ? new Date(val) : val;
-    return new Date(
-      Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())
-    );
+    return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
   });
 
 export const reportCreateSchema = z.object({

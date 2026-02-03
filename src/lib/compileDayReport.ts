@@ -34,9 +34,15 @@ export async function compileDayReport(userId: string, date: Date): Promise<void
   }
 
   const symptoms =
-    incidents.map((i) => i.symptoms?.trim()).filter(Boolean).join(' — ') || null;
+    incidents
+      .map((i) => i.symptoms?.trim())
+      .filter(Boolean)
+      .join(' — ') || null;
   const dietBehaviorNotes =
-    incidents.map((i) => i.notes?.trim()).filter(Boolean).join(' — ') || null;
+    incidents
+      .map((i) => i.notes?.trim())
+      .filter(Boolean)
+      .join(' — ') || null;
   const overallFeeling = `Compiled from ${incidents.length} incident${incidents.length === 1 ? '' : 's'}`;
 
   await prisma.dailyReport.upsert({

@@ -55,9 +55,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           setFeelingMorning(report.feelingMorning ?? '');
           setFeelingAfternoon(report.feelingAfternoon ?? '');
           setFeelingNight(report.feelingNight ?? '');
-          setOverallRating(
-            report.overallRating != null ? String(report.overallRating) : ''
-          );
+          setOverallRating(report.overallRating != null ? String(report.overallRating) : '');
         } else {
           setEditReportId(null);
           setDiet('');
@@ -95,8 +93,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
     setError(null);
     setFieldErrors({});
 
-    const ratingNum =
-      overallRating.trim() === '' ? undefined : parseInt(overallRating, 10);
+    const ratingNum = overallRating.trim() === '' ? undefined : parseInt(overallRating, 10);
 
     try {
       if (editReportId) {
@@ -165,7 +162,11 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       <div className="rounded-2xl bg-btn-secondary/60 p-6 text-foreground-soft">
         <p className="font-medium">Daily log saved.</p>
         <p className="mt-1 text-sm text-foreground-soft/80">
-          You can <Link href="/dashboard/history" className="underline">view history</Link> or{' '}
+          You can{' '}
+          <Link href="/dashboard/history" className="underline">
+            view history
+          </Link>{' '}
+          or{' '}
           <button
             type="button"
             onClick={() => setSuccess(false)}
@@ -229,7 +230,10 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       </div>
 
       <div>
-        <label htmlFor="daily-exercise" className="mb-1 block text-sm font-medium text-foreground-soft">
+        <label
+          htmlFor="daily-exercise"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
           Exercise (optional)
         </label>
         <textarea
@@ -246,7 +250,10 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       </div>
 
       <div>
-        <label htmlFor="daily-medicine" className="mb-1 block text-sm font-medium text-foreground-soft">
+        <label
+          htmlFor="daily-medicine"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
           Medicine (optional)
         </label>
         <textarea
@@ -263,7 +270,10 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       </div>
 
       <div>
-        <label htmlFor="daily-feeling-morning" className="mb-1 block text-sm font-medium text-foreground-soft">
+        <label
+          htmlFor="daily-feeling-morning"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
           How I felt — morning (optional)
         </label>
         <input
@@ -280,7 +290,10 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       </div>
 
       <div>
-        <label htmlFor="daily-feeling-afternoon" className="mb-1 block text-sm font-medium text-foreground-soft">
+        <label
+          htmlFor="daily-feeling-afternoon"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
           How I felt — afternoon (optional)
         </label>
         <input
@@ -297,7 +310,10 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       </div>
 
       <div>
-        <label htmlFor="daily-feeling-night" className="mb-1 block text-sm font-medium text-foreground-soft">
+        <label
+          htmlFor="daily-feeling-night"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
           How I felt — night (optional)
         </label>
         <input
@@ -314,7 +330,10 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       </div>
 
       <div>
-        <label htmlFor="daily-rating" className="mb-1 block text-sm font-medium text-foreground-soft">
+        <label
+          htmlFor="daily-rating"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
           Overall rating (optional, 1–10)
         </label>
         <input
@@ -337,11 +356,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
         disabled={loading || loadingReport}
         className="rounded-full bg-btn-primary px-6 py-3 font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover disabled:opacity-50"
       >
-        {loading
-          ? 'Saving…'
-          : editReportId
-            ? 'Update daily log'
-            : 'Save daily log'}
+        {loading ? 'Saving…' : editReportId ? 'Update daily log' : 'Save daily log'}
       </button>
     </form>
   );

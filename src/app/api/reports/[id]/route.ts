@@ -34,11 +34,7 @@ export async function GET(
 
     if (report.source === 'compiled') {
       const startOfDay = new Date(
-        Date.UTC(
-          report.date.getUTCFullYear(),
-          report.date.getUTCMonth(),
-          report.date.getUTCDate()
-        )
+        Date.UTC(report.date.getUTCFullYear(), report.date.getUTCMonth(), report.date.getUTCDate())
       );
       incidents = await prisma.incident.findMany({
         where: {

@@ -11,12 +11,10 @@ export default async function Home() {
         <ThemeToggle />
       </div>
       <main className="flex max-w-2xl flex-col items-center gap-6 rounded-2xl bg-card-bg p-8 text-center shadow-(--shadow-soft)">
-        <h1 className="text-4xl font-semibold tracking-tight text-foreground-soft">
-          POTS Tracker
-        </h1>
+        <h1 className="text-4xl font-semibold tracking-tight text-foreground-soft">POTS Tracker</h1>
         <p className="text-lg text-foreground-soft/90">
-          Track symptoms and behavior to identify triggers and patterns. Log daily or log
-          incidents; export for your doctor; get gentle AI insights.
+          Track symptoms and behavior to identify triggers and patterns. Log daily or log incidents;
+          export for your doctor; get gentle AI insights.
         </p>
         {session ? (
           <Link

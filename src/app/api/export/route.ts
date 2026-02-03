@@ -46,8 +46,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const rangeDays =
-      Math.round((to.getTime() - from.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+    const rangeDays = Math.round((to.getTime() - from.getTime()) / (24 * 60 * 60 * 1000)) + 1;
     if (rangeDays > MAX_RANGE_DAYS) {
       return NextResponse.json(
         {

@@ -2,11 +2,7 @@
 @import './theme/colors.css';
 
 body {
-  background: linear-gradient(
-    180deg,
-    var(--color-page-bg-start) 0%,
-    var(--color-page-bg-end) 100%
-  );
+  background: linear-gradient(180deg, var(--color-page-bg-start) 0%, var(--color-page-bg-end) 100%);
   background-attachment: fixed;
   color: var(--color-foreground);
   min-height: 100vh;

@@ -24,9 +24,7 @@ function buildCsv(
   rows: ExportRow[]
 ): string {
   const header = buildCsvRow(columns.map((c) => c.label));
-  const dataRows = rows.map((row) =>
-    buildCsvRow(columns.map((c) => c.getValue(row)))
-  );
+  const dataRows = rows.map((row) => buildCsvRow(columns.map((c) => c.getValue(row))));
   return [header, ...dataRows].join('\n');
 }
 
@@ -34,11 +32,7 @@ export type ExportResult = {
   csv: string;
 };
 
-export async function runExport(
-  userId: string,
-  from: Date,
-  to: Date
-): Promise<ExportResult> {
+export async function runExport(userId: string, from: Date, to: Date): Promise<ExportResult> {
   const [reports, incidents] = await Promise.all([
     prisma.dailyReport.findMany({
       where: {

@@ -27,8 +27,7 @@ export function ExportForm() {
     }
 
     const rangeDays =
-      Math.round((toDate.getTime() - fromDate.getTime()) / (24 * 60 * 60 * 1000)) +
-      1;
+      Math.round((toDate.getTime() - fromDate.getTime()) / (24 * 60 * 60 * 1000)) + 1;
     if (rangeDays > MAX_RANGE_DAYS) {
       setError(`Date range must be ${MAX_RANGE_DAYS} days or less.`);
       return;
@@ -40,9 +39,7 @@ export function ExportForm() {
 
   return (
     <div className="rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) sm:p-5">
-      <h3 className="text-sm font-medium text-foreground-soft/80">
-        Export for physician
-      </h3>
+      <h3 className="text-sm font-medium text-foreground-soft/80">Export for physician</h3>
       <div className="mt-3 flex flex-wrap items-end gap-3 sm:gap-4">
         <div>
           <label
@@ -82,9 +79,7 @@ export function ExportForm() {
           Download export
         </button>
       </div>
-      {error && (
-        <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>
-      )}
+      {error && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>}
     </div>
   );
 }

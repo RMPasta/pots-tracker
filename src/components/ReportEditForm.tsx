@@ -28,12 +28,8 @@ export function ReportEditForm({ report }: ReportEditFormProps) {
   const [diet, setDiet] = useState(report.diet ?? '');
   const [exercise, setExercise] = useState(report.exercise ?? '');
   const [medicine, setMedicine] = useState(report.medicine ?? '');
-  const [feelingMorning, setFeelingMorning] = useState(
-    report.feelingMorning ?? ''
-  );
-  const [feelingAfternoon, setFeelingAfternoon] = useState(
-    report.feelingAfternoon ?? ''
-  );
+  const [feelingMorning, setFeelingMorning] = useState(report.feelingMorning ?? '');
+  const [feelingAfternoon, setFeelingAfternoon] = useState(report.feelingAfternoon ?? '');
   const [feelingNight, setFeelingNight] = useState(report.feelingNight ?? '');
   const [overallRating, setOverallRating] = useState<string>(
     report.overallRating != null ? String(report.overallRating) : ''
@@ -48,10 +44,7 @@ export function ReportEditForm({ report }: ReportEditFormProps) {
     setError(null);
     setFieldErrors({});
 
-    const ratingNum =
-      overallRating.trim() === ''
-        ? undefined
-        : parseInt(overallRating, 10);
+    const ratingNum = overallRating.trim() === '' ? undefined : parseInt(overallRating, 10);
 
     try {
       const res = await fetch(`/api/reports/${report.id}`, {
@@ -96,16 +89,11 @@ export function ReportEditForm({ report }: ReportEditFormProps) {
 
       <div>
         <p className="text-sm font-medium text-foreground-soft/80">Date</p>
-        <p className="mt-1 text-foreground-soft">
-          {formatCalendarDate(report.date)}
-        </p>
+        <p className="mt-1 text-foreground-soft">{formatCalendarDate(report.date)}</p>
       </div>
 
       <div>
-        <label
-          htmlFor="edit-diet"
-          className="mb-1 block text-sm font-medium text-foreground-soft"
-        >
+        <label htmlFor="edit-diet" className="mb-1 block text-sm font-medium text-foreground-soft">
           Diet (optional)
         </label>
         <textarea

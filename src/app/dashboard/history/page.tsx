@@ -9,16 +9,10 @@ import { todayStartUTC } from '@/lib/dates';
 
 const DEFAULT_DAYS = 90;
 
-function reportSummary(
-  report: { overallRating: number | null },
-  incidentCount: number
-): string {
-  const rating =
-    report.overallRating != null ? `${report.overallRating}/10` : null;
+function reportSummary(report: { overallRating: number | null }, incidentCount: number): string {
+  const rating = report.overallRating != null ? `${report.overallRating}/10` : null;
   const incidents =
-    incidentCount > 0
-      ? `${incidentCount} incident${incidentCount === 1 ? '' : 's'}`
-      : null;
+    incidentCount > 0 ? `${incidentCount} incident${incidentCount === 1 ? '' : 's'}` : null;
   if (rating && incidents) return `${rating} · ${incidents}`;
   if (rating) return rating;
   if (incidents) return incidents;
@@ -55,9 +49,7 @@ export default async function HistoryPage() {
   const end = todayStartUTC();
   const from = new Date(now);
   from.setDate(from.getDate() - DEFAULT_DAYS);
-  const start = new Date(
-    Date.UTC(from.getFullYear(), from.getMonth(), from.getDate())
-  );
+  const start = new Date(Date.UTC(from.getFullYear(), from.getMonth(), from.getDate()));
 
   const reports = await prisma.dailyReport.findMany({
     where: {
@@ -83,16 +75,12 @@ export default async function HistoryPage() {
           _count: { id: true },
         })
       : [];
-  const countByDate = new Map(
-    incidentCounts.map((row) => [dateKey(row.date), row._count.id])
-  );
+  const countByDate = new Map(incidentCounts.map((row) => [dateKey(row.date), row._count.id]));
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
       <header className="flex items-center justify-between rounded-2xl bg-card-bg px-3 py-2.5 shadow-(--shadow-soft) sm:px-4 sm:py-3">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
-          POTS Tracker
-        </h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">POTS Tracker</h1>
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Link
@@ -124,18 +112,12 @@ export default async function HistoryPage() {
             {reports.map((report) => (
               <li key={report.id}>
                 <div className="flex items-start justify-between gap-3 rounded-2xl bg-card-bg p-3 shadow-(--shadow-soft) transition-colors hover:bg-pastel-mint/40 sm:p-4">
-                  <Link
-                    href={`/dashboard/history/${report.id}`}
-                    className="min-w-0 flex-1"
-                  >
+                  <Link href={`/dashboard/history/${report.id}`} className="min-w-0 flex-1">
                     <span className="font-medium text-foreground-soft">
                       {formatCalendarDate(report.date)}
                     </span>
                     <p className="mt-1 truncate text-sm text-foreground-soft/80">
-                      {reportSummary(
-                        report,
-                        countByDate.get(dateKey(report.date)) ?? 0
-                      )}
+                      {reportSummary(report, countByDate.get(dateKey(report.date)) ?? 0)}
                     </p>
                   </Link>
                   <Link
