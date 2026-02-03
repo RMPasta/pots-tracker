@@ -3,7 +3,6 @@ import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { ExportForm } from '@/components/ExportForm';
 import { formatCalendarDate } from '@/lib/dates';
 import { todayStartUTC } from '@/lib/dates';
 
@@ -94,8 +93,6 @@ export default async function HistoryPage() {
 
       <main className="flex flex-1 flex-col gap-4">
         <h2 className="text-xl font-medium text-foreground-soft">History</h2>
-
-        <ExportForm />
 
         {reports.length === 0 ? (
           <div className="rounded-2xl bg-card-bg p-6 text-center shadow-(--shadow-soft)">

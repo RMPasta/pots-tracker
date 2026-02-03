@@ -1,4 +1,5 @@
 import { prisma } from './prisma';
+import { todayStartUTC } from './dates';
 import { logger } from './logger';
 import { RateLimitError } from './errors';
 
@@ -17,6 +18,8 @@ const RATE_LIMITS: Record<string, RateLimitConfig> = {
     maxRequests: 5,
   },
 };
+
+const CALENDAR_DAY_KEYS = new Set(['ai_analyze']);
 
 interface RateLimitResult {
   allowed: boolean;
@@ -75,4 +78,29 @@ export async function checkRateLimit(
       resetAt: new Date(Date.now() + config.windowMs),
     };
   }
+}
+
+export async function checkRateLimitCalendarDay(
+  userId: string,
+  key: string
+): Promise<void> {
+  if (!CALENDAR_DAY_KEYS.has(key)) {
+    throw new Error(`Calendar-day rate limit not configured for key: ${key}`);
+  }
+  const startOfToday = todayStartUTC();
+  const count = await prisma.aiRateLimit.count({
+    where: {
+      userId,
+      rateLimitKey: key,
+      createdAt: { gte: startOfToday },
+    },
+  });
+  if (count >= 1) {
+    const resetAt = new Date(startOfToday);
+    resetAt.setUTCDate(resetAt.getUTCDate() + 1);
+    throw new RateLimitError('One analysis per day. Try again tomorrow.', resetAt);
+  }
+  await prisma.aiRateLimit.create({
+    data: { userId, rateLimitKey: key },
+  });
 }
