@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import Resend from 'next-auth/providers/resend';
 import Google from 'next-auth/providers/google';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import type { PrismaClient } from '@/generated/prisma/client';
 import { prisma } from './prisma';
 import { logger } from './logger';
 
@@ -32,7 +31,9 @@ if (!resendApiKey && process.env.NODE_ENV === 'development') {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
-  adapter: PrismaAdapter(prisma as PrismaClient),
+  adapter: PrismaAdapter(
+    prisma as unknown as Parameters<typeof PrismaAdapter>[0],
+  ),
   providers,
   pages: {
     signIn: '/auth/signin',

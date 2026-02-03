@@ -60,17 +60,17 @@ export function buildExportColumns(maxIncidents: number): ExportColumn[] {
       {
         key: timeKey,
         label: `Incident ${n} - Time`,
-        getValue: (r) => r[timeKey] ?? '',
+        getValue: (r) => String(r[timeKey] ?? ''),
       },
       {
         key: symptomsKey,
         label: `Incident ${n} - Symptoms`,
-        getValue: (r) => r[symptomsKey] ?? '',
+        getValue: (r) => String(r[symptomsKey] ?? ''),
       },
       {
         key: notesKey,
         label: `Incident ${n} - Notes`,
-        getValue: (r) => r[notesKey] ?? '',
+        getValue: (r) => String(r[notesKey] ?? ''),
       }
     );
   }
