@@ -6,13 +6,19 @@ import { LogFormView } from '@/components/LogFormView';
 import { OnOpenMessage } from '@/components/OnOpenMessage';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
-export default async function DashboardPage() {
+type Props = {
+  searchParams: Promise<{ subscription?: string }>;
+};
+
+export default async function DashboardPage({ searchParams }: Props) {
   const session = await auth();
 
   if (!session) {
     redirect('/auth/signin');
   }
 
+  const { subscription } = await searchParams;
+  const showSuccessMessage = subscription === 'success';
   const canUseInsights = canUseAIInsights(session);
   const canUsePDF = canUsePDFExport(session);
 
@@ -52,6 +58,11 @@ export default async function DashboardPage() {
         </div>
       </header>
       <main className="flex flex-1 flex-col gap-4">
+        {showSuccessMessage && (
+          <p className="rounded-xl bg-pastel-outline-pink/20 px-3 py-2 text-sm text-foreground-soft">
+            You&apos;re subscribed. You now have access to AI insights and PDF export.
+          </p>
+        )}
         <OnOpenMessage userName={session.user?.name ?? session.user?.email ?? 'there'} />
         <LogFormView canUseInsights={canUseInsights} canUsePDF={canUsePDF} />
       </main>
