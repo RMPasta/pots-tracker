@@ -31,9 +31,7 @@ if (!resendApiKey && process.env.NODE_ENV === 'development') {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
-  adapter: PrismaAdapter(
-    prisma as unknown as Parameters<typeof PrismaAdapter>[0],
-  ),
+  adapter: PrismaAdapter(prisma as unknown as Parameters<typeof PrismaAdapter>[0]),
   providers,
   pages: {
     signIn: '/auth/signin',
@@ -42,6 +40,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, user }) {
       if (session.user && user) {
         session.user.id = user.id;
+        const dbUser = await prisma.user.findUnique({
+          where: { id: user.id },
+          select: {
+            subscriptionStatus: true,
+            subscriptionCurrentPeriodEnd: true,
+          },
+        });
+        if (dbUser) {
+          session.user.subscriptionStatus = dbUser.subscriptionStatus ?? null;
+          session.user.subscriptionCurrentPeriodEnd = dbUser.subscriptionCurrentPeriodEnd
+            ? dbUser.subscriptionCurrentPeriodEnd.toISOString()
+            : null;
+        }
       }
       return session;
     },
