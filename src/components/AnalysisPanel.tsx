@@ -100,7 +100,9 @@ export function AnalysisPanel({ canUseInsights }: AnalysisPanelProps) {
   if (!canUseInsights) {
     return (
       <div className="rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) sm:p-5">
-        <h3 className="text-sm font-medium text-foreground-soft/80">Upgrade to use AI insights</h3>
+        <h3 className="text-sm font-medium text-foreground-soft/80">
+          Upgrade to unlock AI insights
+        </h3>
         <p className="mt-1 text-xs text-foreground-soft/70">
           Get personalized analysis of your logs and incidents.
         </p>

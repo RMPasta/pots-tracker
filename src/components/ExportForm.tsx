@@ -103,7 +103,7 @@ export function ExportForm({ canUsePDF }: ExportFormProps) {
             href="/pricing"
             className="font-medium text-foreground-soft underline hover:no-underline"
           >
-            Upgrade to Pro
+            Upgrade for PDF report for your doctor
           </Link>
         </p>
       )}

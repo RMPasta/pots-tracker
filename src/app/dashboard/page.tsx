@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { auth, signOut } from '@/lib/auth';
-import { canUseAIInsights, canUsePDFExport } from '@/lib/subscription';
+import { canUseAIInsights, canUsePDFExport, hasActiveSubscription } from '@/lib/subscription';
 import { redirect } from 'next/navigation';
 import { LogFormView } from '@/components/LogFormView';
 import { OnOpenMessage } from '@/components/OnOpenMessage';
@@ -22,6 +22,14 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">POTS Tracker</h1>
         <div className="flex items-center gap-2">
           <ThemeToggle />
+          {!hasActiveSubscription(session) && (
+            <Link
+              href="/pricing"
+              className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
+            >
+              Upgrade
+            </Link>
+          )}
           <Link
             href="/dashboard/settings"
             className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
