@@ -1,3 +1,4 @@
+import type { Session } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 
 export type SubscriptionStatus = {
@@ -5,6 +6,19 @@ export type SubscriptionStatus = {
   status: string | null;
   currentPeriodEnd: Date | null;
 };
+
+export function hasActiveSubscription(session: Session | null): boolean {
+  const status = session?.user?.subscriptionStatus ?? null;
+  return status === 'active' || status === 'trialing';
+}
+
+export function canUseAIInsights(session: Session | null): boolean {
+  return hasActiveSubscription(session);
+}
+
+export function canUsePDFExport(session: Session | null): boolean {
+  return hasActiveSubscription(session);
+}
 
 export async function getSubscriptionStatus(userId: string): Promise<SubscriptionStatus> {
   const user = await prisma.user.findUnique({

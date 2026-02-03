@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
+import { canUsePDFExport } from '@/lib/subscription';
 import { parseCalendarDateUTC } from '@/lib/dates';
 import { runExport } from '@/lib/export/exportService';
+import { buildPdf } from '@/lib/export/pdfBuilder';
 import { handleError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
 
@@ -59,7 +61,34 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const { csv } = await runExport(session.user.id, from, to);
+    const formatParam = searchParams.get('format');
+    const format = formatParam === 'pdf' ? 'pdf' : 'csv';
+
+    if (format === 'pdf' && !canUsePDFExport(session)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Active subscription required for PDF export.',
+            code: 'SUBSCRIPTION_REQUIRED',
+          },
+        },
+        { status: 402 }
+      );
+    }
+
+    const { csv, columns, rows } = await runExport(session.user.id, from, to);
+
+    if (format === 'pdf') {
+      const pdfBuffer = await buildPdf(columns, rows, from, to);
+      return new NextResponse(pdfBuffer, {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': `attachment; filename="pots-report-${fromParam}-${toParam}.pdf"`,
+        },
+      });
+    }
 
     return new NextResponse(csv, {
       status: 200,

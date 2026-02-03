@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { buildExportColumns, type ExportRow } from './columns';
+import { buildExportColumns, type ExportColumn, type ExportRow } from './columns';
 
 function dateKey(d: Date): string {
   const y = d.getUTCFullYear();
@@ -30,6 +30,8 @@ function buildCsv(
 
 export type ExportResult = {
   csv: string;
+  columns: ExportColumn[];
+  rows: ExportRow[];
 };
 
 export async function runExport(userId: string, from: Date, to: Date): Promise<ExportResult> {
@@ -103,5 +105,5 @@ export async function runExport(userId: string, from: Date, to: Date): Promise<E
   }
 
   const csv = buildCsv(columns, rows);
-  return { csv };
+  return { csv, columns, rows };
 }

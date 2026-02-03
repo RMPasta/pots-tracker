@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
+import { canUseAIInsights } from '@/lib/subscription';
 import { callAI } from '@/lib/ai/client';
 import { buildHistoryAnalysisPrompt } from '@/lib/ai/prompts';
-import {
-  buildAnalysisPayload,
-  MAX_ANALYSIS_RANGE_DAYS,
-} from '@/lib/ai/analysisData';
+import { buildAnalysisPayload, MAX_ANALYSIS_RANGE_DAYS } from '@/lib/ai/analysisData';
 import { checkRateLimitCalendarDay } from '@/lib/rate-limit';
 import { parseCalendarDateUTC, todayStartUTC } from '@/lib/dates';
 import { handleError } from '@/lib/errors';
@@ -17,8 +15,7 @@ const DEFAULT_DAYS = 30;
 const NO_DATA_RESPONSE = {
   success: true,
   data: {
-    summary:
-      'No data in this range. Log some days or incidents to get personalized insights.',
+    summary: 'No data in this range. Log some days or incidents to get personalized insights.',
     trends: [] as string[],
     insights: [] as string[],
     suggestions: [
@@ -56,9 +53,7 @@ function parseBody(body: unknown): { from: string; to: string } {
   return { from: fromStr, to: toStr };
 }
 
-function validateAnalysisResponse(
-  parsed: unknown
-): {
+function validateAnalysisResponse(parsed: unknown): {
   summary: string;
   trends: string[];
   insights: string[];
@@ -67,8 +62,7 @@ function validateAnalysisResponse(
 } {
   if (!parsed || typeof parsed !== 'object') throw new Error('Invalid response shape');
   const p = parsed as Record<string, unknown>;
-  const summary =
-    typeof p.summary === 'string' ? p.summary : 'No summary available.';
+  const summary = typeof p.summary === 'string' ? p.summary : 'No summary available.';
   const trends = Array.isArray(p.trends)
     ? p.trends.filter((x): x is string => typeof x === 'string')
     : [];
@@ -78,8 +72,7 @@ function validateAnalysisResponse(
   const suggestions = Array.isArray(p.suggestions)
     ? p.suggestions.filter((x): x is string => typeof x === 'string')
     : [];
-  const weeklyHighlight =
-    typeof p.weeklyHighlight === 'string' ? p.weeklyHighlight : undefined;
+  const weeklyHighlight = typeof p.weeklyHighlight === 'string' ? p.weeklyHighlight : undefined;
   return {
     summary,
     trends,
@@ -99,6 +92,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
+    if (!canUseAIInsights(session)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Active subscription required for AI insights.',
+            code: 'SUBSCRIPTION_REQUIRED',
+          },
+        },
+        { status: 402 }
+      );
+    }
+
     await checkRateLimitCalendarDay(session.user.id, 'ai_analyze');
 
     const body = await request.json().catch(() => ({}));
@@ -114,8 +120,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const rangeDays =
-      Math.round((to.getTime() - from.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+    const rangeDays = Math.round((to.getTime() - from.getTime()) / (24 * 60 * 60 * 1000)) + 1;
     if (rangeDays > MAX_ANALYSIS_RANGE_DAYS) {
       return NextResponse.json(
         {
@@ -128,20 +133,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const payload = await buildAnalysisPayload(
-      session.user.id,
-      from,
-      to
-    );
+    const payload = await buildAnalysisPayload(session.user.id, from, to);
 
     if (!payload.hasData) {
       return NextResponse.json(NO_DATA_RESPONSE);
     }
 
-    const prompt = buildHistoryAnalysisPrompt(
-      payload.dataSummary,
-      payload.dateRangeLabel
-    );
+    const prompt = buildHistoryAnalysisPrompt(payload.dataSummary, payload.dateRangeLabel);
     const { content } = await callAI(prompt, {
       responseFormat: { type: 'json_object' },
       maxTokens: 1000,
