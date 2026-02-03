@@ -8,7 +8,12 @@ import { ExportForm } from './ExportForm';
 import { AnalysisPanel } from './AnalysisPanel';
 import Link from 'next/link';
 
-export function LogFormView() {
+type LogFormViewProps = {
+  canUseInsights: boolean;
+  canUsePDF: boolean;
+};
+
+export function LogFormView({ canUseInsights, canUsePDF }: LogFormViewProps) {
   const [mode, setMode] = useState<Mode>('incident');
 
   return (
@@ -23,8 +28,8 @@ export function LogFormView() {
         </Link>
       </div>
 
-      {mode === 'export' && <ExportForm />}
-      {mode === 'insights' && <AnalysisPanel />}
+      {mode === 'export' && <ExportForm canUsePDF={canUsePDF} />}
+      {mode === 'insights' && <AnalysisPanel canUseInsights={canUseInsights} />}
       {(mode === 'daily' || mode === 'incident') && (
         <div className="rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) sm:p-5">
           {mode === 'daily' ? <DailyLogForm /> : <IncidentForm />}

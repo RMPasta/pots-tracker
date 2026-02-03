@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { auth, signOut } from '@/lib/auth';
+import { canUseAIInsights, canUsePDFExport } from '@/lib/subscription';
 import { redirect } from 'next/navigation';
 import { LogFormView } from '@/components/LogFormView';
 import { OnOpenMessage } from '@/components/OnOpenMessage';
@@ -11,6 +12,9 @@ export default async function DashboardPage() {
   if (!session) {
     redirect('/auth/signin');
   }
+
+  const canUseInsights = canUseAIInsights(session);
+  const canUsePDF = canUsePDFExport(session);
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
@@ -41,7 +45,7 @@ export default async function DashboardPage() {
       </header>
       <main className="flex flex-1 flex-col gap-4">
         <OnOpenMessage userName={session.user?.name ?? session.user?.email ?? 'there'} />
-        <LogFormView />
+        <LogFormView canUseInsights={canUseInsights} canUsePDF={canUsePDF} />
       </main>
     </div>
   );

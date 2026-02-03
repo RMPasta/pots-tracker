@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 import { todayDateString } from '@/lib/dates';
 
@@ -11,12 +12,16 @@ function dateStringDaysAgo(days: number): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-export function ExportForm() {
+type ExportFormProps = {
+  canUsePDF: boolean;
+};
+
+export function ExportForm({ canUsePDF }: ExportFormProps) {
   const [from, setFrom] = useState(() => dateStringDaysAgo(30));
   const [to, setTo] = useState(todayDateString);
   const [error, setError] = useState<string | null>(null);
 
-  function handleDownload() {
+  function handleDownload(format: 'csv' | 'pdf') {
     setError(null);
 
     const fromDate = new Date(from);
@@ -34,6 +39,9 @@ export function ExportForm() {
     }
 
     const params = new URLSearchParams({ from, to });
+    if (format === 'pdf') {
+      params.set('format', 'pdf');
+    }
     window.open(`/api/export?${params.toString()}`, '_blank', 'noopener,noreferrer');
   }
 
@@ -73,12 +81,32 @@ export function ExportForm() {
         </div>
         <button
           type="button"
-          onClick={handleDownload}
+          onClick={() => handleDownload('csv')}
           className="rounded-full bg-btn-outline px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:opacity-90"
         >
-          Download export
+          Download CSV
         </button>
+        {canUsePDF && (
+          <button
+            type="button"
+            onClick={() => handleDownload('pdf')}
+            className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
+          >
+            Download PDF
+          </button>
+        )}
       </div>
+      {!canUsePDF && (
+        <p className="mt-2 text-xs text-foreground-soft/70">
+          Want a PDF report for your doctor?{' '}
+          <Link
+            href="/pricing"
+            className="font-medium text-foreground-soft underline hover:no-underline"
+          >
+            Upgrade to Pro
+          </Link>
+        </p>
+      )}
       {error && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>}
     </div>
   );

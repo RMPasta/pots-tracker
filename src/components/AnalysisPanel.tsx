@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 import { todayDateString } from '@/lib/dates';
 
@@ -19,7 +20,11 @@ type AnalysisData = {
   weeklyHighlight?: string;
 };
 
-export function AnalysisPanel() {
+type AnalysisPanelProps = {
+  canUseInsights: boolean;
+};
+
+export function AnalysisPanel({ canUseInsights }: AnalysisPanelProps) {
   const [from, setFrom] = useState(() => dateStringDaysAgo(30));
   const [to, setTo] = useState(() => todayDateString());
   const [loading, setLoading] = useState(false);
@@ -45,8 +50,7 @@ export function AnalysisPanel() {
     }
 
     const rangeDays =
-      Math.round((toDate.getTime() - fromDate.getTime()) / (24 * 60 * 60 * 1000)) +
-      1;
+      Math.round((toDate.getTime() - fromDate.getTime()) / (24 * 60 * 60 * 1000)) + 1;
     if (rangeDays > MAX_RANGE_DAYS) {
       setError(`Date range must be ${MAX_RANGE_DAYS} days or less.`);
       return;
@@ -63,16 +67,15 @@ export function AnalysisPanel() {
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        if (res.status === 429) {
-          setError(
-            (data?.error?.message as string) ||
-              'Rate limit exceeded. Try again later.'
-          );
+        if (res.status === 402 || data?.error?.code === 'SUBSCRIPTION_REQUIRED') {
+          setError('Active subscription required for AI insights. Upgrade to continue.');
           return;
         }
-        setError(
-          (data?.error?.message as string) || 'Something went wrong. Try again later.'
-        );
+        if (res.status === 429) {
+          setError((data?.error?.message as string) || 'Rate limit exceeded. Try again later.');
+          return;
+        }
+        setError((data?.error?.message as string) || 'Something went wrong. Try again later.');
         return;
       }
 
@@ -81,9 +84,7 @@ export function AnalysisPanel() {
           summary: data.data.summary ?? '',
           trends: Array.isArray(data.data.trends) ? data.data.trends : [],
           insights: Array.isArray(data.data.insights) ? data.data.insights : [],
-          suggestions: Array.isArray(data.data.suggestions)
-            ? data.data.suggestions
-            : [],
+          suggestions: Array.isArray(data.data.suggestions) ? data.data.suggestions : [],
           weeklyHighlight: data.data.weeklyHighlight,
         });
       } else {
@@ -96,11 +97,26 @@ export function AnalysisPanel() {
     }
   }
 
+  if (!canUseInsights) {
+    return (
+      <div className="rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) sm:p-5">
+        <h3 className="text-sm font-medium text-foreground-soft/80">Upgrade to use AI insights</h3>
+        <p className="mt-1 text-xs text-foreground-soft/70">
+          Get personalized analysis of your logs and incidents.
+        </p>
+        <Link
+          href="/pricing"
+          className="mt-3 inline-block rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
+        >
+          View plans
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) sm:p-5">
-      <h3 className="text-sm font-medium text-foreground-soft/80">
-        Get insights
-      </h3>
+      <h3 className="text-sm font-medium text-foreground-soft/80">Get insights</h3>
       <p className="mt-1 text-xs text-foreground-soft/70">
         AI analysis of your logs and incidents for the selected period.
       </p>
@@ -180,9 +196,7 @@ export function AnalysisPanel() {
           {loading ? 'Analyzing…' : 'Get insights'}
         </button>
       </div>
-      {error && (
-        <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>
-      )}
+      {error && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>}
       {result && !loading && (
         <div className="mt-4 space-y-4 border-t border-pastel-outline-pink/30 pt-4">
           <div>
@@ -196,9 +210,7 @@ export function AnalysisPanel() {
               <h4 className="text-xs font-semibold uppercase tracking-wide text-foreground-soft/70">
                 This week
               </h4>
-              <p className="mt-1 text-sm text-foreground-soft/90">
-                {result.weeklyHighlight}
-              </p>
+              <p className="mt-1 text-sm text-foreground-soft/90">{result.weeklyHighlight}</p>
             </div>
           )}
           {result.trends.length > 0 && (
