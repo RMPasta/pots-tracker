@@ -79,6 +79,8 @@ export function ExportForm({ canUsePDF }: ExportFormProps) {
             className="rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-3 py-2 text-sm text-input-text focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
           />
         </div>
+      </div>
+      <div className="mt-3 flex flex-wrap items-center gap-3 sm:gap-4">
         <button
           type="button"
           onClick={() => handleDownload('csv')}
@@ -86,15 +88,14 @@ export function ExportForm({ canUsePDF }: ExportFormProps) {
         >
           Download CSV
         </button>
-        {canUsePDF && (
-          <button
-            type="button"
-            onClick={() => handleDownload('pdf')}
-            className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
-          >
-            Download PDF
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={() => canUsePDF && handleDownload('pdf')}
+          disabled={!canUsePDF}
+          className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Download PDF
+        </button>
       </div>
       {!canUsePDF && (
         <p className="mt-2 text-xs text-foreground-soft/70">
