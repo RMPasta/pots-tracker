@@ -44,6 +44,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ received: true }, { status: 200 });
   }
 
+  const existing = await prisma.stripeWebhookEvent.findUnique({
+    where: { id: event.id },
+  });
+  if (existing) {
+    return NextResponse.json({ received: true }, { status: 200 });
+  }
+
   const subscription = event.data.object as Stripe.Subscription;
   const customerId =
     typeof subscription.customer === 'string' ? subscription.customer : subscription.customer?.id;
@@ -101,6 +108,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       metadata: { eventId: event.id, userId: user.id, route: 'api/stripe/webhook' },
     });
     return NextResponse.json({ error: 'Webhook handler failed' }, { status: 500 });
+  }
+
+  try {
+    await prisma.stripeWebhookEvent.create({
+      data: { id: event.id },
+    });
+  } catch {
+    // Duplicate from race: already processed, return 200 so Stripe does not retry
   }
 
   return NextResponse.json({ received: true }, { status: 200 });

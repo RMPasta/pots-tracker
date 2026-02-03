@@ -119,3 +119,10 @@ model AiRateLimit {
   @@index([userId, rateLimitKey, createdAt])
   @@map("ai_rate_limits")
 }
+
+model StripeWebhookEvent {
+  id          String   @id
+  processedAt DateTime @default(now())
+
+  @@map("stripe_webhook_events")
+}
