@@ -18,6 +18,12 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">POTS Tracker</h1>
         <div className="flex items-center gap-2">
           <ThemeToggle />
+          <Link
+            href="/dashboard/settings"
+            className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
+          >
+            Settings
+          </Link>
           <form
             action={async () => {
               'use server';

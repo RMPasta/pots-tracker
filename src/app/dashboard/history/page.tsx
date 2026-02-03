@@ -83,6 +83,12 @@ export default async function HistoryPage() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Link
+            href="/dashboard/settings"
+            className="rounded-full bg-btn-outline px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:opacity-90"
+          >
+            Settings
+          </Link>
+          <Link
             href="/dashboard"
             className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
           >
