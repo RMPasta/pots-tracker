@@ -37,21 +37,21 @@ export default async function DashboardPage({ searchParams }: Props) {
   ];
 
   const signOutButtonClass =
-    'rounded-full bg-btn-primary px-4 py-2 text-sm text-foreground-soft transition-colors hover:bg-btn-primary-hover min-h-[44px] w-full md:w-auto';
+    'flex w-full min-h-[44px] items-center justify-center rounded-full bg-btn-primary px-4 py-3 text-center text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover';
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
       <DashboardHeader
         links={links}
         signOutSlot={
-          <form action={signOutAction}>
+          <form action={signOutAction} className="w-full">
             <button type="submit" className={signOutButtonClass}>
               Sign out
             </button>
           </form>
         }
         signOutSlotMobile={
-          <form action={signOutAction}>
+          <form action={signOutAction} className="w-full">
             <button type="submit" className={signOutButtonClass}>
               Sign out
             </button>
