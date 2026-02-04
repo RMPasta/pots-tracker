@@ -91,6 +91,9 @@ export default async function HistoryPage() {
         {reports.length === 0 ? (
           <div className="rounded-2xl bg-card-bg p-6 text-center shadow-(--shadow-soft)">
             <p className="text-foreground-soft/90">No logs yet.</p>
+            <p className="mt-1 text-sm text-foreground-soft/70">
+              Your first daily log or incident will show up here.
+            </p>
             <Link
               href="/dashboard"
               className="mt-4 inline-block rounded-full bg-btn-primary px-6 py-3 font-medium text-foreground-soft transition-colors hover:opacity-90"

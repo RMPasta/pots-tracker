@@ -20,7 +20,7 @@ export function ManageSubscriptionButton() {
 
       setError(data?.error?.message ?? 'Unable to open billing.');
     } catch {
-      setError('Something went wrong.');
+      setError('Something went wrong. Try again.');
     } finally {
       setLoading(false);
     }

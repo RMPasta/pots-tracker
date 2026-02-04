@@ -49,8 +49,8 @@ export default async function PricingPage({ searchParams }: Props) {
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>
-      <div className="flex w-full max-w-2xl flex-col items-center gap-6 rounded-2xl bg-card-bg p-4 text-center shadow-(--shadow-soft)">
-        <div className="mb-1 flex h-[280px] w-[280px] shrink-0 items-center justify-center overflow-hidden">
+      <div className="flex w-full max-w-2xl flex-col items-center gap-4 rounded-2xl bg-card-bg p-4 text-center shadow-(--shadow-soft)">
+        <div className="-mb-16 flex h-[280px] w-[280px] shrink-0 items-center justify-center overflow-hidden">
           <AppLogo size="xl" className="scale-125 object-center" />
         </div>
         <h1 className="text-xl font-semibold tracking-tight text-foreground-soft">Plans</h1>
@@ -90,6 +90,7 @@ export default async function PricingPage({ searchParams }: Props) {
             <h2 id="tier-pro" className="text-xl font-semibold text-foreground-soft">
               Pro
             </h2>
+            <p className="mt-1 text-sm text-foreground-soft/80">$1/month</p>
             <ul className="mt-4 space-y-2.5">
               <FeatureItem>Everything in Free</FeatureItem>
               <FeatureItem>AI insights</FeatureItem>

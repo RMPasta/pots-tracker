@@ -67,7 +67,7 @@ export function ReportEditForm({ report }: ReportEditFormProps) {
         if (json.error?.fields) {
           setFieldErrors(json.error.fields);
         }
-        setError(json.error?.message ?? 'Something went wrong');
+        setError(json.error?.message ?? 'Something went wrong. Try again.');
         return;
       }
 

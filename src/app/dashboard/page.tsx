@@ -63,8 +63,8 @@ export default async function DashboardPage({ searchParams }: Props) {
         {showSuccessMessage && (
           <p className="rounded-xl bg-pastel-outline-pink/20 px-3 py-2 text-sm text-foreground-soft">
             {isSubscribed
-              ? "You're subscribed. You now have access to AI insights and PDF export."
-              : 'Payment successful. Your subscription is syncing—refresh in a moment to see your new features.'}
+              ? "You're subscribed! You now have access to AI insights and PDF export."
+              : 'Payment went through. Your subscription is syncing—refresh in a moment to see your new features.'}
           </p>
         )}
         <OnOpenMessage userName={session.user?.name ?? session.user?.email ?? 'there'} />

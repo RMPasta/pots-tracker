@@ -25,7 +25,7 @@ export function SubscribeButton() {
 
       setError(data?.error?.message ?? 'Payments unavailable.');
     } catch {
-      setError('Something went wrong.');
+      setError('Something went wrong. Try again.');
     } finally {
       setLoading(false);
     }

@@ -113,7 +113,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
         const json = await res.json();
         if (!res.ok) {
           if (json.error?.fields) setFieldErrors(json.error.fields);
-          setError(json.error?.message ?? 'Something went wrong');
+          setError(json.error?.message ?? 'Something went wrong. Try again.');
           return;
         }
       } else {
@@ -134,7 +134,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
         const json = await res.json();
         if (!res.ok) {
           if (json.error?.fields) setFieldErrors(json.error.fields);
-          setError(json.error?.message ?? 'Something went wrong');
+          setError(json.error?.message ?? 'Something went wrong. Try again.');
           return;
         }
       }

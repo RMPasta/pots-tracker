@@ -6,6 +6,9 @@ import { todayDateString } from '@/lib/dates';
 
 const MAX_RANGE_DAYS = 90;
 
+const AI_DISCLAIMER =
+  'For trends and patterns only. Not medical advice—always follow your care team’s guidance.';
+
 function dateStringDaysAgo(days: number): string {
   const d = new Date();
   d.setDate(d.getDate() - days);
@@ -122,6 +125,7 @@ export function AnalysisPanel({ canUseInsights }: AnalysisPanelProps) {
         <p className="mt-1 text-xs text-foreground-soft/70">
           Get personalized analysis of your logs and incidents.
         </p>
+        <p className="mt-2 text-xs text-foreground-soft/70">{AI_DISCLAIMER}</p>
         <Link
           href="/pricing"
           className="mt-3 inline-block rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
@@ -138,6 +142,7 @@ export function AnalysisPanel({ canUseInsights }: AnalysisPanelProps) {
       <p className="mt-1 text-xs text-foreground-soft/70">
         AI analysis of your logs and incidents for the selected period.
       </p>
+      <p className="mt-2 text-xs text-foreground-soft/70">{AI_DISCLAIMER}</p>
       <div className="mt-3 flex flex-wrap items-end gap-3 sm:gap-4">
         <div>
           <label
