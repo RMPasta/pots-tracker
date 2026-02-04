@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { todayDateString } from '@/lib/dates';
 
 const MAX_RANGE_DAYS = 90;
@@ -30,6 +30,26 @@ export function AnalysisPanel({ canUseInsights }: AnalysisPanelProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AnalysisData | null>(null);
+
+  useEffect(() => {
+    if (!canUseInsights) return;
+    fetch('/api/ai/insight-cache', { credentials: 'include' })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.success && data?.data != null) {
+          if (typeof data.from === 'string') setFrom(data.from);
+          if (typeof data.to === 'string') setTo(data.to);
+          setResult({
+            summary: data.data.summary ?? '',
+            trends: Array.isArray(data.data.trends) ? data.data.trends : [],
+            insights: Array.isArray(data.data.insights) ? data.data.insights : [],
+            suggestions: Array.isArray(data.data.suggestions) ? data.data.suggestions : [],
+            weeklyHighlight: data.data.weeklyHighlight,
+          });
+        }
+      })
+      .catch(() => {});
+  }, [canUseInsights]);
 
   function setPreset(days: number) {
     setFrom(dateStringDaysAgo(days));

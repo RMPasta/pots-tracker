@@ -19,7 +19,7 @@ export function formatCalendarDate(d: Date): string {
 
 export function todayStartUTC(): Date {
   const n = new Date();
-  return new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()));
+  return new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate()));
 }
 
 export function todayDateString(): string {

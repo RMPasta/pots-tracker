@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { canUseAIInsights } from '@/lib/subscription';
+import { prisma } from '@/lib/prisma';
 import { callAI } from '@/lib/ai/client';
 import { buildHistoryAnalysisPrompt } from '@/lib/ai/prompts';
 import { buildAnalysisPayload, MAX_ANALYSIS_RANGE_DAYS } from '@/lib/ai/analysisData';
@@ -147,6 +148,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const parsed = JSON.parse(content) as unknown;
     const result = validateAnalysisResponse(parsed);
+
+    await prisma.user.update({
+      where: { id: session.user.id },
+      data: {
+        lastAnalysisAt: new Date(),
+        lastAnalysisFrom: fromStr,
+        lastAnalysisTo: toStr,
+        lastAnalysisResult: result as object,
+      },
+    });
 
     return NextResponse.json({
       success: true,

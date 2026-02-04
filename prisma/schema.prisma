@@ -21,6 +21,11 @@ model User {
   subscriptionStatus    String?
   subscriptionCurrentPeriodEnd DateTime?
 
+  lastAnalysisAt     DateTime? @db.Timestamptz
+  lastAnalysisFrom   String?
+  lastAnalysisTo     String?
+  lastAnalysisResult Json?
+
   accounts     Account[]
   sessions     Session[]
   dailyReports DailyReport[]
