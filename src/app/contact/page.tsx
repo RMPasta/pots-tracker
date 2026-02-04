@@ -22,11 +22,9 @@ export default async function ContactPage(): Promise<React.ReactElement> {
         </p>
         {session && (
           <p className="text-sm text-foreground-soft/80">
-            You&apos;re signed in.{' '}
             <Link href="/dashboard" className="underline">
               Go to dashboard
             </Link>
-            .
           </p>
         )}
         <div className="w-full text-left">
