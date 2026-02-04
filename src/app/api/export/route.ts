@@ -81,7 +81,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     if (format === 'pdf') {
       const pdfBuffer = await buildPdf(columns, rows, from, to);
-      return new NextResponse(pdfBuffer, {
+      return new NextResponse(new Uint8Array(pdfBuffer), {
         status: 200,
         headers: {
           'Content-Type': 'application/pdf',
