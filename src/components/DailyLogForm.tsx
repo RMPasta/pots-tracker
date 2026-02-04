@@ -194,7 +194,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
         </p>
       )}
 
-      <div className="min-w-0">
+      <div className="min-w-0 overflow-hidden">
         <label htmlFor="daily-date" className="mb-1 block text-sm font-medium text-foreground-soft">
           Date
         </label>
@@ -206,6 +206,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           required
           disabled={loadingReport}
           className={`min-w-0 max-w-full box-border ${inputClass} disabled:opacity-60`}
+          style={{ width: '100%' }}
         />
         {fieldErrors.date && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.date.join(', ')}</p>
