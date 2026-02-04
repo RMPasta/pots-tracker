@@ -37,8 +37,6 @@ export function AnalysisPanel({ canUseInsights }: AnalysisPanelProps) {
       .then((res) => res.json())
       .then((data) => {
         if (data?.success && data?.data != null) {
-          if (typeof data.from === 'string') setFrom(data.from);
-          if (typeof data.to === 'string') setTo(data.to);
           setResult({
             summary: data.data.summary ?? '',
             trends: Array.isArray(data.data.trends) ? data.data.trends : [],
@@ -55,7 +53,6 @@ export function AnalysisPanel({ canUseInsights }: AnalysisPanelProps) {
     setFrom(dateStringDaysAgo(days));
     setTo(todayDateString());
     setError(null);
-    setResult(null);
   }
 
   async function handleAnalyze() {
@@ -156,7 +153,6 @@ export function AnalysisPanel({ canUseInsights }: AnalysisPanelProps) {
             onChange={(e) => {
               setFrom(e.target.value);
               setError(null);
-              setResult(null);
             }}
             disabled={loading}
             className="rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-3 py-2 text-sm text-input-text focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40 disabled:opacity-60"
@@ -176,7 +172,6 @@ export function AnalysisPanel({ canUseInsights }: AnalysisPanelProps) {
             onChange={(e) => {
               setTo(e.target.value);
               setError(null);
-              setResult(null);
             }}
             disabled={loading}
             className="rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-3 py-2 text-sm text-input-text focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40 disabled:opacity-60"
