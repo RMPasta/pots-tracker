@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 import { todayDateString } from '@/lib/dates';
+import { LogSuccessMessage } from '@/components/LogSuccessMessage';
 
 type IncidentFormProps = {
   onSuccess?: () => void;
@@ -66,26 +66,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
   }
 
   if (success) {
-    return (
-      <div className="rounded-2xl bg-btn-secondary/60 p-6 text-foreground-soft">
-        <p className="font-medium">Incident logged.</p>
-        <p className="mt-1 text-sm text-foreground-soft/80">
-          You can{' '}
-          <Link href="/dashboard/history" className="underline">
-            view history
-          </Link>{' '}
-          or{' '}
-          <button
-            type="button"
-            onClick={() => setSuccess(false)}
-            className="cursor-pointer underline hover:opacity-90"
-          >
-            log another incident
-          </button>
-          .
-        </p>
-      </div>
-    );
+    return <LogSuccessMessage variant="incident" onAddAnother={() => setSuccess(false)} />;
   }
 
   return (

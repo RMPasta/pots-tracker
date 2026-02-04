@@ -131,3 +131,14 @@ model StripeWebhookEvent {
 
   @@map("stripe_webhook_events")
 }
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String?  @db.VarChar(200)
+  email     String?  @db.VarChar(200)
+  message   String   @db.Text
+  ip        String?  @db.VarChar(50)
+  createdAt DateTime @default(now())
+
+  @@map("contact_submissions")
+}

@@ -110,6 +110,12 @@ export default async function PricingPage({ searchParams }: Props) {
             </div>
           </section>
         </div>
+        <Link
+          href="/contact"
+          className="text-sm text-foreground-soft/80 underline hover:text-foreground-soft"
+        >
+          Contact
+        </Link>
       </div>
     </div>
   );

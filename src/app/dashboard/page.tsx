@@ -32,6 +32,7 @@ export default async function DashboardPage({ searchParams }: Props) {
     ...(!hasActiveSubscription(session)
       ? [{ href: '/pricing' as const, label: 'Upgrade' as const }]
       : []),
+    { href: '/contact' as const, label: 'Contact' as const },
     { href: '/dashboard/settings' as const, label: 'Settings' as const },
   ];
 

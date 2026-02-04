@@ -34,6 +34,12 @@ export default async function Home() {
             Get Started
           </Link>
         )}
+        <Link
+          href="/contact"
+          className="mt-4 text-sm text-foreground-soft/80 underline hover:text-foreground-soft"
+        >
+          Contact
+        </Link>
       </main>
     </div>
   );

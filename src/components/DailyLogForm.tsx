@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { todayDateString } from '@/lib/dates';
+import { LogSuccessMessage } from '@/components/LogSuccessMessage';
 
 type DailyLogFormProps = {
   onSuccess?: () => void;
@@ -158,26 +158,7 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
   }
 
   if (success) {
-    return (
-      <div className="rounded-2xl bg-btn-secondary/60 p-6 text-foreground-soft">
-        <p className="font-medium">Daily log saved.</p>
-        <p className="mt-1 text-sm text-foreground-soft/80">
-          You can{' '}
-          <Link href="/dashboard/history" className="underline">
-            view history
-          </Link>{' '}
-          or{' '}
-          <button
-            type="button"
-            onClick={() => setSuccess(false)}
-            className="cursor-pointer underline hover:opacity-90"
-          >
-            add another log
-          </button>
-          .
-        </p>
-      </div>
-    );
+    return <LogSuccessMessage variant="daily" onAddAnother={() => setSuccess(false)} />;
   }
 
   return (
