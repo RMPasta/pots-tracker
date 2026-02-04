@@ -28,7 +28,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen antialiased bg-background-soft text-foreground-soft">
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <div className="flex min-h-screen flex-col">
+            <main className="flex-1">{children}</main>
+            <footer className="py-4 text-center text-sm text-foreground-soft/70">
+              Made with love for my amazing wife, Dana 🐸❤️
+            </footer>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
