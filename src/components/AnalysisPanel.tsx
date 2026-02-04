@@ -60,7 +60,6 @@ export function AnalysisPanel({ canUseInsights }: AnalysisPanelProps) {
 
   async function handleAnalyze() {
     setError(null);
-    setResult(null);
 
     const fromDate = new Date(from);
     const toDate = new Date(to);
