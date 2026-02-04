@@ -26,9 +26,9 @@ export default async function DashboardPage({ searchParams }: Props) {
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
-      <header className="flex items-center justify-between rounded-2xl bg-card-bg px-3 py-2.5 shadow-(--shadow-soft) sm:px-4 sm:py-3">
+      <header className="flex min-h-[88px] items-center justify-between rounded-2xl bg-card-bg px-3 py-4 shadow-(--shadow-soft) sm:px-4 sm:py-5">
         <div className="flex items-center gap-2">
-          <AppLogo size="sm" className="shrink-0" />
+          <AppLogo size="header" />
           <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
             POTS Tracker
           </h1>
