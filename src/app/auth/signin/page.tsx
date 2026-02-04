@@ -1,5 +1,6 @@
 import { auth, signIn } from '@/lib/auth';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { AppLogo } from '@/components/AppLogo';
 
 export default async function SignInPage() {
   const session = await auth();
@@ -10,7 +11,8 @@ export default async function SignInPage() {
         <div className="absolute right-4 top-4">
           <ThemeToggle />
         </div>
-        <div className="rounded-2xl bg-card-bg px-8 py-6 shadow-(--shadow-soft)">
+        <div className="flex flex-col items-center gap-4 rounded-2xl bg-card-bg px-8 py-6 shadow-(--shadow-soft)">
+          <AppLogo size="md" className="shrink-0" />
           <p className="text-lg text-foreground-soft">You are already signed in.</p>
           <a
             href="/dashboard"
@@ -30,12 +32,12 @@ export default async function SignInPage() {
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>
-      <div className="w-full max-w-sm rounded-2xl bg-card-bg p-6 shadow-(--shadow-soft)">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
-          Sign in to POTS Tracker
-        </h1>
+      <div className="flex min-h-[520px] w-full max-w-md flex-col items-center rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft)">
+        <div className="mb-5 flex h-[280px] w-[280px] shrink-0 items-center justify-center overflow-hidden">
+          <AppLogo size="xl" className="scale-125 object-center" />
+        </div>
 
-        <div className="mt-6 flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4">
           {hasResend && (
             <>
               <form

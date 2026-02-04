@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
+import { AppLogo } from '@/components/AppLogo';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { formatCalendarDate } from '@/lib/dates';
 import { todayStartUTC } from '@/lib/dates';
@@ -79,7 +80,12 @@ export default async function HistoryPage() {
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
       <header className="flex items-center justify-between rounded-2xl bg-card-bg px-3 py-2.5 shadow-(--shadow-soft) sm:px-4 sm:py-3">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">POTS Tracker</h1>
+        <div className="flex items-center gap-2">
+          <AppLogo size="sm" className="shrink-0" />
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
+            POTS Tracker
+          </h1>
+        </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Link

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { canUsePDFExport } from '@/lib/subscription';
+import { AppLogo } from '@/components/AppLogo';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SubscribeButton } from '@/components/SubscribeButton';
 
@@ -20,7 +21,10 @@ export default async function PricingPage({ searchParams }: Props) {
         <ThemeToggle />
       </div>
       <div className="w-full max-w-md rounded-2xl bg-card-bg p-6 shadow-(--shadow-soft)">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">Pricing</h1>
+        <div className="mb-3 flex flex-col items-center gap-2">
+          <AppLogo size="md" className="shrink-0" />
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">Pricing</h1>
+        </div>
 
         {showCanceledMessage && (
           <p className="mt-3 rounded-xl bg-pastel-outline-pink/20 px-3 py-2 text-sm text-foreground-soft">

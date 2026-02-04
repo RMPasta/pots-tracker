@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { AppLogo } from '@/components/AppLogo';
 
 export default async function Home() {
   const session = await auth();
@@ -10,9 +11,11 @@ export default async function Home() {
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>
-      <main className="flex max-w-2xl flex-col items-center gap-6 rounded-2xl bg-card-bg p-8 text-center shadow-(--shadow-soft)">
-        <h1 className="text-4xl font-semibold tracking-tight text-foreground-soft">POTS Tracker</h1>
-        <p className="text-lg text-foreground-soft/90">
+      <main className="flex min-h-[520px] w-full max-w-md flex-col items-center rounded-2xl bg-card-bg p-4 text-center shadow-(--shadow-soft)">
+        <div className="mb-1 flex h-[280px] w-[280px] shrink-0 items-center justify-center overflow-hidden">
+          <AppLogo size="xl" className="scale-125 object-center" />
+        </div>
+        <p className="mb-5 text-lg leading-snug text-foreground-soft/90">
           Track symptoms and behavior to identify triggers and patterns. Log daily or log incidents;
           export for your doctor; get gentle AI insights.
         </p>
