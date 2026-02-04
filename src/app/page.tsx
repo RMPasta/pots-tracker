@@ -2,6 +2,14 @@ import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { AppLogo } from '@/components/AppLogo';
+import { buildPageMetadata } from '@/lib/seo';
+
+export const metadata = buildPageMetadata({
+  path: '/',
+  title: 'POTS Tracker — Symptom & trigger tracking for POTS',
+  description:
+    'Track POTS symptoms and triggers, log daily or by incident, export for your doctor, and get gentle AI insights. Symptom diary for postural orthostatic tachycardia syndrome.',
+});
 
 export default async function Home() {
   const session = await auth();
@@ -12,6 +20,7 @@ export default async function Home() {
         <ThemeToggle />
       </div>
       <main className="flex min-h-[520px] w-full max-w-md flex-col items-center rounded-2xl bg-card-bg p-4 text-center shadow-(--shadow-soft)">
+        <h1 className="sr-only">POTS Tracker — Symptom tracking for POTS</h1>
         <div className="mb-1 flex h-[280px] w-[280px] shrink-0 items-center justify-center overflow-hidden">
           <AppLogo size="xl" className="scale-125 object-center" />
         </div>

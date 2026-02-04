@@ -1,6 +1,13 @@
 import { auth, signIn } from '@/lib/auth';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { AppLogo } from '@/components/AppLogo';
+import { buildPageMetadata } from '@/lib/seo';
+
+export const metadata = buildPageMetadata({
+  path: '/auth/signin',
+  title: 'Sign in — POTS Tracker',
+  description: 'Sign in to POTS Tracker to track symptoms, triggers, and export for your doctor.',
+});
 
 export default async function SignInPage() {
   const session = await auth();

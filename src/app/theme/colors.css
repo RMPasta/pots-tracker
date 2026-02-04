@@ -44,6 +44,10 @@
   /* Shadow and radius */
   --shadow-soft: 0 2px 12px rgba(248, 176, 208, 0.15);
   --radius-soft: 1rem;
+
+  /* Footer – muted text (light mode: dark on light bg) */
+  --color-footer-muted: rgba(23, 23, 23, 0.7);
+  --color-footer-muted-hover: rgba(23, 23, 23, 0.9);
 }
 
 /* Dark mode – thicker pastel purple background, light pastel panels (toggle via [data-theme="dark"]) */
@@ -61,6 +65,10 @@
   --color-input-text: #171717;
   --color-input-placeholder: #6b7280;
   --shadow-soft: 0 2px 16px rgba(0, 0, 0, 0.15);
+
+  /* Footer – muted text (dark mode: light on dark bg) */
+  --color-footer-muted: rgba(240, 232, 248, 0.85);
+  --color-footer-muted-hover: rgba(240, 232, 248, 1);
 }
 
 @theme inline {

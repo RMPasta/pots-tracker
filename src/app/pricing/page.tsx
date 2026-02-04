@@ -4,6 +4,14 @@ import { canUsePDFExport } from '@/lib/subscription';
 import { AppLogo } from '@/components/AppLogo';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SubscribeButton } from '@/components/SubscribeButton';
+import { buildPageMetadata } from '@/lib/seo';
+
+export const metadata = buildPageMetadata({
+  path: '/pricing',
+  title: 'Plans & pricing — POTS Tracker',
+  description:
+    'Free tier: symptom and trigger logging, history, CSV export. Pro: AI insights and PDF doctor report for POTS symptom tracking.',
+});
 
 type Props = {
   searchParams: Promise<{ canceled?: string }>;
@@ -46,6 +54,7 @@ export default async function PricingPage({ searchParams }: Props) {
           <AppLogo size="xl" className="scale-125 object-center" />
         </div>
         <h1 className="text-xl font-semibold tracking-tight text-foreground-soft">Plans</h1>
+        <p className="text-sm text-foreground-soft/80">Symptom tracking for POTS: Free and Pro.</p>
 
         {showCanceledMessage && (
           <p

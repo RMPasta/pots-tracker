@@ -3,6 +3,14 @@ import { auth } from '@/lib/auth';
 import { AppLogo } from '@/components/AppLogo';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { ContactForm } from '@/components/ContactForm';
+import { buildPageMetadata } from '@/lib/seo';
+
+export const metadata = buildPageMetadata({
+  path: '/contact',
+  title: 'Contact — POTS Tracker',
+  description:
+    'Send feedback, report a bug, or get support for POTS Tracker. We read every message.',
+});
 
 export default async function ContactPage(): Promise<React.ReactElement> {
   const session = await auth();
@@ -18,7 +26,8 @@ export default async function ContactPage(): Promise<React.ReactElement> {
         </div>
         <h1 className="text-xl font-semibold tracking-tight text-foreground-soft">Contact</h1>
         <p className="text-sm text-foreground-soft/80">
-          Send feedback, report a bug, or say hello. We read every message.
+          Feedback for POTS Tracker: send a message, report a bug, or say hello. We read every
+          message.
         </p>
         {session && (
           <p className="text-sm text-foreground-soft/80">
