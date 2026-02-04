@@ -37,7 +37,7 @@ export default async function PricingPage({ searchParams }: Props) {
   const isSubscribed = session ? canUsePDFExport(session) : false;
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center gap-8 p-8">
+    <div className="relative flex min-h-screen flex-col items-center justify-center gap-8 p-4 sm:p-8">
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>

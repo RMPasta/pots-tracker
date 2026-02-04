@@ -22,7 +22,7 @@ export function LogFormView({ canUseInsights, canUsePDF }: LogFormViewProps) {
         <LogTypeToggle value={mode} onChange={setMode} />
         <Link
           href="/dashboard/history"
-          className="rounded-full bg-btn-secondary px-4 py-2 text-center text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-secondary-hover"
+          className="flex min-h-[44px] items-center justify-center rounded-full bg-btn-secondary px-4 py-2 text-center text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-secondary-hover"
         >
           View history
         </Link>

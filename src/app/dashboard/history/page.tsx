@@ -2,8 +2,7 @@ import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
-import { AppLogo } from '@/components/AppLogo';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { DashboardHeader } from '@/components/DashboardHeader';
 import { formatCalendarDate } from '@/lib/dates';
 import { todayStartUTC } from '@/lib/dates';
 
@@ -79,29 +78,12 @@ export default async function HistoryPage() {
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
-      <header className="flex min-h-[88px] items-center justify-between rounded-2xl bg-card-bg px-3 py-4 shadow-(--shadow-soft) sm:px-4 sm:py-5">
-        <div className="flex items-center gap-2">
-          <AppLogo size="header" />
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
-            POTS Tracker
-          </h1>
-        </div>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Link
-            href="/dashboard/settings"
-            className="rounded-full bg-btn-outline px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:opacity-90"
-          >
-            Settings
-          </Link>
-          <Link
-            href="/dashboard"
-            className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
-          >
-            Back to dashboard
-          </Link>
-        </div>
-      </header>
+      <DashboardHeader
+        links={[
+          { href: '/dashboard/settings', label: 'Settings' },
+          { href: '/dashboard', label: 'Back to dashboard' },
+        ]}
+      />
 
       <main className="flex flex-1 flex-col gap-4">
         <h2 className="text-xl font-medium text-foreground-soft">History</h2>
@@ -131,7 +113,7 @@ export default async function HistoryPage() {
                   </Link>
                   <Link
                     href={`/dashboard/history/${report.id}/edit`}
-                    className="shrink-0 text-sm font-medium text-pastel-outline-pink underline hover:opacity-90"
+                    className="shrink-0 px-2 py-2 text-sm font-medium text-pastel-outline-pink underline hover:opacity-90 min-h-[44px] inline-flex items-center"
                   >
                     {hasDailyLogContent(report) ? 'Edit' : 'Add daily log'}
                   </Link>

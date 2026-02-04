@@ -1,9 +1,7 @@
-import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { redirect, notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
-import { AppLogo } from '@/components/AppLogo';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { DashboardHeader } from '@/components/DashboardHeader';
 import { ReportEditForm } from '@/components/ReportEditForm';
 
 export default async function ReportEditPage({ params }: { params: Promise<{ id: string }> }) {
@@ -24,23 +22,7 @@ export default async function ReportEditPage({ params }: { params: Promise<{ id:
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
-      <header className="flex min-h-[88px] items-center justify-between rounded-2xl bg-card-bg px-3 py-4 shadow-(--shadow-soft) sm:px-4 sm:py-5">
-        <div className="flex items-center gap-2">
-          <AppLogo size="header" />
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
-            POTS Tracker
-          </h1>
-        </div>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Link
-            href={`/dashboard/history/${id}`}
-            className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
-          >
-            Cancel
-          </Link>
-        </div>
-      </header>
+      <DashboardHeader links={[{ href: `/dashboard/history/${id}`, label: 'Cancel' }]} />
 
       <main className="flex flex-1 flex-col gap-4">
         <h2 className="text-xl font-medium text-foreground-soft">

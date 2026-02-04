@@ -7,7 +7,7 @@ export default async function Home() {
   const session = await auth();
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center p-8">
+    <div className="relative flex min-h-screen flex-col items-center justify-center p-4 sm:p-8">
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>

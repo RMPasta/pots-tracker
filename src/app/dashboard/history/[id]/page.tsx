@@ -2,8 +2,7 @@ import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { redirect, notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
-import { AppLogo } from '@/components/AppLogo';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { DashboardHeader } from '@/components/DashboardHeader';
 import { formatCalendarDate } from '@/lib/dates';
 
 export default async function ReportDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -44,23 +43,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
-      <header className="flex min-h-[88px] items-center justify-between rounded-2xl bg-card-bg px-3 py-4 shadow-(--shadow-soft) sm:px-4 sm:py-5">
-        <div className="flex items-center gap-2">
-          <AppLogo size="header" />
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
-            POTS Tracker
-          </h1>
-        </div>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Link
-            href="/dashboard/history"
-            className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
-          >
-            Back to history
-          </Link>
-        </div>
-      </header>
+      <DashboardHeader links={[{ href: '/dashboard/history', label: 'Back to history' }]} />
 
       <main className="flex flex-1 flex-col gap-4">
         <div className="rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft) sm:p-5">
@@ -91,13 +74,15 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
               {report.diet != null && report.diet !== '' && (
                 <div>
                   <h3 className="text-sm font-medium text-foreground-soft/80">Diet</h3>
-                  <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">{report.diet}</p>
+                  <p className="mt-1 break-words whitespace-pre-wrap text-foreground-soft/90">
+                    {report.diet}
+                  </p>
                 </div>
               )}
               {report.exercise != null && report.exercise !== '' && (
                 <div>
                   <h3 className="text-sm font-medium text-foreground-soft/80">Exercise</h3>
-                  <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
+                  <p className="mt-1 break-words whitespace-pre-wrap text-foreground-soft/90">
                     {report.exercise}
                   </p>
                 </div>
@@ -105,7 +90,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
               {report.medicine != null && report.medicine !== '' && (
                 <div>
                   <h3 className="text-sm font-medium text-foreground-soft/80">Medicine</h3>
-                  <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
+                  <p className="mt-1 break-words whitespace-pre-wrap text-foreground-soft/90">
                     {report.medicine}
                   </p>
                 </div>
@@ -115,7 +100,9 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
                   <h3 className="text-sm font-medium text-foreground-soft/80">
                     How I felt — morning
                   </h3>
-                  <p className="mt-1 text-foreground-soft/90">{report.feelingMorning}</p>
+                  <p className="mt-1 break-words text-foreground-soft/90">
+                    {report.feelingMorning}
+                  </p>
                 </div>
               )}
               {report.feelingAfternoon != null && report.feelingAfternoon !== '' && (
@@ -123,7 +110,9 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
                   <h3 className="text-sm font-medium text-foreground-soft/80">
                     How I felt — afternoon
                   </h3>
-                  <p className="mt-1 text-foreground-soft/90">{report.feelingAfternoon}</p>
+                  <p className="mt-1 break-words text-foreground-soft/90">
+                    {report.feelingAfternoon}
+                  </p>
                 </div>
               )}
               {report.feelingNight != null && report.feelingNight !== '' && (
@@ -131,7 +120,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
                   <h3 className="text-sm font-medium text-foreground-soft/80">
                     How I felt — night
                   </h3>
-                  <p className="mt-1 text-foreground-soft/90">{report.feelingNight}</p>
+                  <p className="mt-1 break-words text-foreground-soft/90">{report.feelingNight}</p>
                 </div>
               )}
               {report.overallRating != null && (
@@ -160,17 +149,19 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
                           </p>
                         )}
                         {incident.symptoms && (
-                          <p className="mt-1 whitespace-pre-wrap text-foreground-soft/90">
+                          <p className="mt-1 break-words whitespace-pre-wrap text-foreground-soft/90">
                             {incident.symptoms}
                           </p>
                         )}
                         {incident.notes && (
-                          <p className="mt-1 text-sm text-foreground-soft/70">{incident.notes}</p>
+                          <p className="mt-1 break-words text-sm text-foreground-soft/70">
+                            {incident.notes}
+                          </p>
                         )}
                       </div>
                       <Link
                         href={`/dashboard/incidents/${incident.id}/edit?returnTo=${encodeURIComponent(`/dashboard/history/${report.id}`)}`}
-                        className="shrink-0 text-sm font-medium text-pastel-outline-pink underline hover:opacity-90"
+                        className="shrink-0 px-2 py-2 text-sm font-medium text-pastel-outline-pink underline hover:opacity-90 min-h-[44px] inline-flex items-center"
                       >
                         Edit
                       </Link>

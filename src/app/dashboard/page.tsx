@@ -2,14 +2,18 @@ import Link from 'next/link';
 import { auth, signOut } from '@/lib/auth';
 import { canUseAIInsights, canUsePDFExport, hasActiveSubscription } from '@/lib/subscription';
 import { redirect } from 'next/navigation';
-import { AppLogo } from '@/components/AppLogo';
+import { DashboardHeader } from '@/components/DashboardHeader';
 import { LogFormView } from '@/components/LogFormView';
 import { OnOpenMessage } from '@/components/OnOpenMessage';
-import { ThemeToggle } from '@/components/ThemeToggle';
 
 type Props = {
   searchParams: Promise<{ subscription?: string }>;
 };
+
+async function signOutAction() {
+  'use server';
+  await signOut({ redirectTo: '/' });
+}
 
 export default async function DashboardPage({ searchParams }: Props) {
   const session = await auth();
@@ -24,46 +28,35 @@ export default async function DashboardPage({ searchParams }: Props) {
   const canUseInsights = canUseAIInsights(session);
   const canUsePDF = canUsePDFExport(session);
 
+  const links = [
+    ...(!hasActiveSubscription(session)
+      ? [{ href: '/pricing' as const, label: 'Upgrade' as const }]
+      : []),
+    { href: '/dashboard/settings' as const, label: 'Settings' as const },
+  ];
+
+  const signOutButtonClass =
+    'rounded-full bg-btn-primary px-4 py-2 text-sm text-foreground-soft transition-colors hover:bg-btn-primary-hover min-h-[44px] w-full md:w-auto';
+
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 p-4 sm:gap-6 sm:p-6">
-      <header className="flex min-h-[88px] items-center justify-between rounded-2xl bg-card-bg px-3 py-4 shadow-(--shadow-soft) sm:px-4 sm:py-5">
-        <div className="flex items-center gap-2">
-          <AppLogo size="header" />
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground-soft">
-            POTS Tracker
-          </h1>
-        </div>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          {!hasActiveSubscription(session) && (
-            <Link
-              href="/pricing"
-              className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
-            >
-              Upgrade
-            </Link>
-          )}
-          <Link
-            href="/dashboard/settings"
-            className="rounded-full bg-btn-primary px-4 py-2 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
-          >
-            Settings
-          </Link>
-          <form
-            action={async () => {
-              'use server';
-              await signOut({ redirectTo: '/' });
-            }}
-          >
-            <button
-              type="submit"
-              className="rounded-full bg-btn-primary px-4 py-2 text-sm text-foreground-soft transition-colors hover:bg-btn-primary-hover"
-            >
+      <DashboardHeader
+        links={links}
+        signOutSlot={
+          <form action={signOutAction}>
+            <button type="submit" className={signOutButtonClass}>
               Sign out
             </button>
           </form>
-        </div>
-      </header>
+        }
+        signOutSlotMobile={
+          <form action={signOutAction}>
+            <button type="submit" className={signOutButtonClass}>
+              Sign out
+            </button>
+          </form>
+        }
+      />
       <main className="flex flex-1 flex-col gap-4">
         {showSuccessMessage && (
           <p className="rounded-xl bg-pastel-outline-pink/20 px-3 py-2 text-sm text-foreground-soft">
