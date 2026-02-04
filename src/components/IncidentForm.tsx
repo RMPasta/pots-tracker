@@ -96,8 +96,8 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
         </p>
       )}
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="min-w-0">
           <label
             htmlFor="incident-date"
             className="mb-1 block text-sm font-medium text-foreground-soft"
@@ -110,13 +110,13 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
-            className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
+            className="min-w-0 max-w-full w-full box-border rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
           />
           {fieldErrors.date && (
             <p className="mt-1 text-sm text-red-600">{fieldErrors.date.join(', ')}</p>
           )}
         </div>
-        <div>
+        <div className="min-w-0">
           <label
             htmlFor="incident-time"
             className="mb-1 block text-sm font-medium text-foreground-soft"
@@ -128,7 +128,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
-            className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
+            className="min-w-0 max-w-full w-full box-border rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
           />
           {fieldErrors.time && (
             <p className="mt-1 text-sm text-red-600">{fieldErrors.time.join(', ')}</p>

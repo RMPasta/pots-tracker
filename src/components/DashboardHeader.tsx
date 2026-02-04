@@ -95,13 +95,13 @@ export function DashboardHeader({ links, signOutSlot, signOutSlotMobile }: Dashb
               <Link
                 key={href}
                 href={href}
-                className="rounded-full bg-btn-primary px-4 py-3 text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
+                className="flex w-full items-center justify-center rounded-full bg-btn-primary px-4 py-3 text-center text-sm font-medium text-foreground-soft transition-colors hover:bg-btn-primary-hover"
                 onClick={() => setMenuOpen(false)}
               >
                 {label}
               </Link>
             ))}
-            {signOutSlotMobile ?? signOutSlot}
+            <div className="w-full">{signOutSlotMobile ?? signOutSlot}</div>
           </div>
         </>
       )}
