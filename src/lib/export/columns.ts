@@ -60,6 +60,7 @@ export function buildExportColumns(maxIncidents: number): ExportColumn[] {
     const timeKey = `incident${n}Time`;
     const symptomsKey = `incident${n}Symptoms`;
     const notesKey = `incident${n}Notes`;
+    const ratingKey = `incident${n}Rating`;
     incidentColumns.push(
       {
         key: timeKey,
@@ -75,6 +76,11 @@ export function buildExportColumns(maxIncidents: number): ExportColumn[] {
         key: notesKey,
         label: `Incident ${n} - Notes`,
         getValue: (r) => String(r[notesKey] ?? ''),
+      },
+      {
+        key: ratingKey,
+        label: `Incident ${n} - Rating`,
+        getValue: (r) => String(r[ratingKey] ?? ''),
       }
     );
   }

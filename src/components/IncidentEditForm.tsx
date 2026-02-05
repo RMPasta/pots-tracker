@@ -9,6 +9,7 @@ type Incident = {
   time: string | null;
   symptoms: string | null;
   notes: string | null;
+  rating: number | null;
 };
 
 type IncidentEditFormProps = {
@@ -27,6 +28,7 @@ export function IncidentEditForm({ incident, returnTo }: IncidentEditFormProps) 
   const [time, setTime] = useState(incident.time ?? '');
   const [symptoms, setSymptoms] = useState(incident.symptoms ?? '');
   const [notes, setNotes] = useState(incident.notes ?? '');
+  const [rating, setRating] = useState(incident.rating != null ? String(incident.rating) : '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
@@ -46,6 +48,7 @@ export function IncidentEditForm({ incident, returnTo }: IncidentEditFormProps) 
           time: time || undefined,
           symptoms: symptoms || undefined,
           notes: notes || undefined,
+          rating: rating.trim() === '' ? undefined : parseInt(rating, 10),
         }),
       });
 
@@ -154,6 +157,28 @@ export function IncidentEditForm({ incident, returnTo }: IncidentEditFormProps) 
         />
         {fieldErrors.notes && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.notes.join(', ')}</p>
+        )}
+      </div>
+
+      <div>
+        <label
+          htmlFor="incident-edit-rating"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
+          Compare to other incidents (optional, 1–10)
+        </label>
+        <input
+          id="incident-edit-rating"
+          type="number"
+          min={1}
+          max={10}
+          value={rating}
+          onChange={(e) => setRating(e.target.value)}
+          placeholder="1–10"
+          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
+        />
+        {fieldErrors.rating && (
+          <p className="mt-1 text-sm text-red-600">{fieldErrors.rating.join(', ')}</p>
         )}
       </div>
 

@@ -162,6 +162,11 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
                             {incident.time}
                           </p>
                         )}
+                        {incident.rating != null && (
+                          <p className="text-sm text-foreground-soft/80">
+                            Rating: {incident.rating}/10
+                          </p>
+                        )}
                         {incident.symptoms && (
                           <p className="mt-1 break-words whitespace-pre-wrap text-foreground-soft/90">
                             {incident.symptoms}

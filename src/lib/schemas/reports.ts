@@ -41,6 +41,7 @@ export const incidentCreateSchema = z.object({
   time: z.string().max(20).optional(),
   symptoms: z.string().max(10000).optional(),
   notes: z.string().max(10000).optional(),
+  rating: z.number().int().min(1).max(10).optional(),
 });
 
 export type ReportCreateInput = z.infer<typeof reportCreateSchema>;

@@ -29,6 +29,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         time: data.time ?? null,
         symptoms: data.symptoms ?? null,
         notes: data.notes ?? null,
+        rating: data.rating ?? null,
       },
     });
 

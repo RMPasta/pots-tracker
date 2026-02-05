@@ -16,6 +16,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
   });
   const [symptoms, setSymptoms] = useState('');
   const [notes, setNotes] = useState('');
+  const [rating, setRating] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,6 +37,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
           time: time || undefined,
           symptoms: symptoms || undefined,
           notes: notes || undefined,
+          rating: rating.trim() === '' ? undefined : parseInt(rating, 10),
         }),
       });
 
@@ -56,6 +58,7 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
       });
       setSymptoms('');
       setNotes('');
+      setRating('');
       setSuccess(true);
       onSuccess?.();
     } catch {
@@ -156,6 +159,28 @@ export function IncidentForm({ onSuccess }: IncidentFormProps) {
         />
         {fieldErrors.notes && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.notes.join(', ')}</p>
+        )}
+      </div>
+
+      <div>
+        <label
+          htmlFor="incident-rating"
+          className="mb-1 block text-sm font-medium text-foreground-soft"
+        >
+          Compare to other incidents (optional, 1–10)
+        </label>
+        <input
+          id="incident-rating"
+          type="number"
+          min={1}
+          max={10}
+          value={rating}
+          onChange={(e) => setRating(e.target.value)}
+          placeholder="1–10"
+          className="w-full rounded-xl border border-pastel-outline-pink/70 bg-input-bg px-4 py-2 text-input-text placeholder:text-input-placeholder focus:border-pastel-outline-pink focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40"
+        />
+        {fieldErrors.rating && (
+          <p className="mt-1 text-sm text-red-600">{fieldErrors.rating.join(', ')}</p>
         )}
       </div>
 

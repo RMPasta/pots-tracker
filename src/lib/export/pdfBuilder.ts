@@ -167,20 +167,24 @@ function getIncident(
   time: string;
   symptoms: string;
   notes: string;
+  rating: string;
 } {
   const t = row[`incident${n}Time`];
   const s = row[`incident${n}Symptoms`];
   const n_ = row[`incident${n}Notes`];
+  const r = row[`incident${n}Rating`];
+  const ratingVal = r != null && String(r).trim() !== '' ? String(r) : '—';
   return {
     time: t != null && String(t).trim() !== '' ? String(t) : '—',
     symptoms: s != null && String(s).trim() !== '' ? String(s) : '—',
     notes: n_ != null && String(n_).trim() !== '' ? String(n_) : '—',
+    rating: ratingVal,
   };
 }
 
 function hasIncidentData(row: ExportRow, n: number): boolean {
   const inc = getIncident(row, n);
-  return inc.time !== '—' || inc.symptoms !== '—' || inc.notes !== '—';
+  return inc.time !== '—' || inc.symptoms !== '—' || inc.notes !== '—' || inc.rating !== '—';
 }
 
 export async function buildPdf(
@@ -334,6 +338,17 @@ export async function buildPdf(
           font,
         });
         y -= LINE_HEIGHT + LABEL_VALUE_GAP;
+
+        if (inc.rating !== '—') {
+          ensureSpace(LINE_HEIGHT);
+          currentPage.drawText(`Rating: ${inc.rating}/10`, {
+            x: MARGIN + 8,
+            y,
+            size: BODY_FONT_SIZE,
+            font,
+          });
+          y -= LINE_HEIGHT + LABEL_VALUE_GAP;
+        }
 
         ensureSpace(LINE_HEIGHT);
         currentPage.drawText('Symptoms:', {

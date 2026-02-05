@@ -103,6 +103,7 @@ export async function PATCH(
         time: data.time ?? null,
         symptoms: data.symptoms ?? null,
         notes: data.notes ?? null,
+        rating: data.rating ?? null,
       },
     });
 

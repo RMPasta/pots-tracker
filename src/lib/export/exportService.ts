@@ -92,14 +92,17 @@ export async function runExport(userId: string, from: Date, to: Date): Promise<E
       const timeKey = `incident${n}Time`;
       const symptomsKey = `incident${n}Symptoms`;
       const notesKey = `incident${n}Notes`;
+      const ratingKey = `incident${n}Rating`;
       if (i) {
         row[timeKey] = i.time;
         row[symptomsKey] = i.symptoms;
         row[notesKey] = i.notes;
+        row[ratingKey] = i.rating ?? null;
       } else {
         row[timeKey] = null;
         row[symptomsKey] = null;
         row[notesKey] = null;
+        row[ratingKey] = null;
       }
     }
 
