@@ -41,6 +41,7 @@ export default async function IncidentEditPage({
               time: incident.time,
               symptoms: incident.symptoms,
               notes: incident.notes,
+              rating: incident.rating,
             }}
             returnTo={returnTo ?? null}
           />

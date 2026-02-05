@@ -40,6 +40,8 @@ export default async function ReportEditPage({ params }: { params: Promise<{ id:
               feelingAfternoon: report.feelingAfternoon,
               feelingNight: report.feelingNight,
               overallRating: report.overallRating,
+              waterIntake: report.waterIntake,
+              sodiumIntake: report.sodiumIntake,
             }}
           />
         </div>
