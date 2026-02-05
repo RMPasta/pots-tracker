@@ -10,6 +10,8 @@ type Report = {
   diet: string | null;
   exercise: string | null;
   medicine: string | null;
+  waterIntake: string | null;
+  sodiumIntake: string | null;
   feelingMorning: string | null;
   feelingAfternoon: string | null;
   feelingNight: string | null;
@@ -28,6 +30,8 @@ export function ReportEditForm({ report }: ReportEditFormProps) {
   const [diet, setDiet] = useState(report.diet ?? '');
   const [exercise, setExercise] = useState(report.exercise ?? '');
   const [medicine, setMedicine] = useState(report.medicine ?? '');
+  const [waterIntake, setWaterIntake] = useState(report.waterIntake ?? '');
+  const [sodiumIntake, setSodiumIntake] = useState(report.sodiumIntake ?? '');
   const [feelingMorning, setFeelingMorning] = useState(report.feelingMorning ?? '');
   const [feelingAfternoon, setFeelingAfternoon] = useState(report.feelingAfternoon ?? '');
   const [feelingNight, setFeelingNight] = useState(report.feelingNight ?? '');
@@ -54,6 +58,8 @@ export function ReportEditForm({ report }: ReportEditFormProps) {
           diet: diet || undefined,
           exercise: exercise || undefined,
           medicine: medicine || undefined,
+          waterIntake: waterIntake || undefined,
+          sodiumIntake: sodiumIntake || undefined,
           feelingMorning: feelingMorning || undefined,
           feelingAfternoon: feelingAfternoon || undefined,
           feelingNight: feelingNight || undefined,
@@ -147,6 +153,47 @@ export function ReportEditForm({ report }: ReportEditFormProps) {
         {fieldErrors.medicine && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.medicine.join(', ')}</p>
         )}
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label
+            htmlFor="edit-water-intake"
+            className="mb-1 block text-sm font-medium text-foreground-soft"
+          >
+            Water intake (optional)
+          </label>
+          <input
+            id="edit-water-intake"
+            type="text"
+            value={waterIntake}
+            onChange={(e) => setWaterIntake(e.target.value)}
+            placeholder="e.g. 8 glasses, 2.5 L"
+            className={inputClass}
+          />
+          {fieldErrors.waterIntake && (
+            <p className="mt-1 text-sm text-red-600">{fieldErrors.waterIntake.join(', ')}</p>
+          )}
+        </div>
+        <div>
+          <label
+            htmlFor="edit-sodium-intake"
+            className="mb-1 block text-sm font-medium text-foreground-soft"
+          >
+            Sodium / salt (optional)
+          </label>
+          <input
+            id="edit-sodium-intake"
+            type="text"
+            value={sodiumIntake}
+            onChange={(e) => setSodiumIntake(e.target.value)}
+            placeholder="e.g. 3g, high salt day"
+            className={inputClass}
+          />
+          {fieldErrors.sodiumIntake && (
+            <p className="mt-1 text-sm text-red-600">{fieldErrors.sodiumIntake.join(', ')}</p>
+          )}
+        </div>
       </div>
 
       <div>

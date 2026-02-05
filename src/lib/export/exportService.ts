@@ -79,6 +79,8 @@ export async function runExport(userId: string, from: Date, to: Date): Promise<E
       diet: r.diet,
       exercise: r.exercise,
       medicine: r.medicine,
+      waterIntake: r.waterIntake,
+      sodiumIntake: r.sodiumIntake,
       feelingMorning: r.feelingMorning,
       feelingAfternoon: r.feelingAfternoon,
       feelingNight: r.feelingNight,

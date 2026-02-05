@@ -36,6 +36,8 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
     (report.diet != null && report.diet !== '') ||
     (report.exercise != null && report.exercise !== '') ||
     (report.medicine != null && report.medicine !== '') ||
+    (report.waterIntake != null && report.waterIntake !== '') ||
+    (report.sodiumIntake != null && report.sodiumIntake !== '') ||
     (report.feelingMorning != null && report.feelingMorning !== '') ||
     (report.feelingAfternoon != null && report.feelingAfternoon !== '') ||
     (report.feelingNight != null && report.feelingNight !== '') ||
@@ -93,6 +95,18 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
                   <p className="mt-1 break-words whitespace-pre-wrap text-foreground-soft/90">
                     {report.medicine}
                   </p>
+                </div>
+              )}
+              {report.waterIntake != null && report.waterIntake !== '' && (
+                <div>
+                  <h3 className="text-sm font-medium text-foreground-soft/80">Water intake</h3>
+                  <p className="mt-1 break-words text-foreground-soft/90">{report.waterIntake}</p>
+                </div>
+              )}
+              {report.sodiumIntake != null && report.sodiumIntake !== '' && (
+                <div>
+                  <h3 className="text-sm font-medium text-foreground-soft/80">Sodium / salt</h3>
+                  <p className="mt-1 break-words text-foreground-soft/90">{report.sodiumIntake}</p>
                 </div>
               )}
               {report.feelingMorning != null && report.feelingMorning !== '' && (

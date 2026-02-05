@@ -28,6 +28,8 @@ const DAILY_FIELDS: { key: keyof ExportRow; label: string }[] = [
   { key: 'diet', label: 'Diet' },
   { key: 'exercise', label: 'Exercise' },
   { key: 'medicine', label: 'Medicine' },
+  { key: 'waterIntake', label: 'Water intake' },
+  { key: 'sodiumIntake', label: 'Sodium / salt' },
   { key: 'feelingMorning', label: 'Feeling (morning)' },
   { key: 'feelingAfternoon', label: 'Feeling (afternoon)' },
   { key: 'feelingNight', label: 'Feeling (night)' },

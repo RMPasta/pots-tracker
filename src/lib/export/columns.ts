@@ -10,6 +10,8 @@ export type ExportRow = {
   diet: string | null;
   exercise: string | null;
   medicine: string | null;
+  waterIntake: string | null;
+  sodiumIntake: string | null;
   feelingMorning: string | null;
   feelingAfternoon: string | null;
   feelingNight: string | null;
@@ -28,6 +30,8 @@ const dailyColumns: ExportColumn[] = [
   { key: 'diet', label: 'Diet', getValue: (r) => r.diet ?? '' },
   { key: 'exercise', label: 'Exercise', getValue: (r) => r.exercise ?? '' },
   { key: 'medicine', label: 'Medicine', getValue: (r) => r.medicine ?? '' },
+  { key: 'waterIntake', label: 'Water intake', getValue: (r) => r.waterIntake ?? '' },
+  { key: 'sodiumIntake', label: 'Sodium / salt', getValue: (r) => r.sodiumIntake ?? '' },
   {
     key: 'feelingMorning',
     label: 'Feeling (morning)',

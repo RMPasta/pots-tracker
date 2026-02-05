@@ -84,6 +84,8 @@ model DailyReport {
   diet              String?  @db.Text
   exercise          String?  @db.Text
   medicine          String?  @db.Text
+  waterIntake       String?  @db.Text
+  sodiumIntake      String?  @db.Text
   feelingMorning    String?  @db.Text
   feelingAfternoon  String?  @db.Text
   feelingNight      String?  @db.Text

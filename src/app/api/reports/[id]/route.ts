@@ -112,6 +112,8 @@ export async function PATCH(
         diet: data.diet ?? null,
         exercise: data.exercise ?? null,
         medicine: data.medicine ?? null,
+        waterIntake: data.waterIntake ?? null,
+        sodiumIntake: data.sodiumIntake ?? null,
         feelingMorning: data.feelingMorning ?? null,
         feelingAfternoon: data.feelingAfternoon ?? null,
         feelingNight: data.feelingNight ?? null,

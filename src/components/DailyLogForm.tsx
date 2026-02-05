@@ -16,6 +16,8 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
   const [diet, setDiet] = useState('');
   const [exercise, setExercise] = useState('');
   const [medicine, setMedicine] = useState('');
+  const [waterIntake, setWaterIntake] = useState('');
+  const [sodiumIntake, setSodiumIntake] = useState('');
   const [feelingMorning, setFeelingMorning] = useState('');
   const [feelingAfternoon, setFeelingAfternoon] = useState('');
   const [feelingNight, setFeelingNight] = useState('');
@@ -40,6 +42,8 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           setDiet('');
           setExercise('');
           setMedicine('');
+          setWaterIntake('');
+          setSodiumIntake('');
           setFeelingMorning('');
           setFeelingAfternoon('');
           setFeelingNight('');
@@ -52,6 +56,8 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           setDiet(report.diet ?? '');
           setExercise(report.exercise ?? '');
           setMedicine(report.medicine ?? '');
+          setWaterIntake(report.waterIntake ?? '');
+          setSodiumIntake(report.sodiumIntake ?? '');
           setFeelingMorning(report.feelingMorning ?? '');
           setFeelingAfternoon(report.feelingAfternoon ?? '');
           setFeelingNight(report.feelingNight ?? '');
@@ -61,6 +67,8 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           setDiet('');
           setExercise('');
           setMedicine('');
+          setWaterIntake('');
+          setSodiumIntake('');
           setFeelingMorning('');
           setFeelingAfternoon('');
           setFeelingNight('');
@@ -73,6 +81,8 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
           setDiet('');
           setExercise('');
           setMedicine('');
+          setWaterIntake('');
+          setSodiumIntake('');
           setFeelingMorning('');
           setFeelingAfternoon('');
           setFeelingNight('');
@@ -104,6 +114,8 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
             diet: diet || undefined,
             exercise: exercise || undefined,
             medicine: medicine || undefined,
+            waterIntake: waterIntake || undefined,
+            sodiumIntake: sodiumIntake || undefined,
             feelingMorning: feelingMorning || undefined,
             feelingAfternoon: feelingAfternoon || undefined,
             feelingNight: feelingNight || undefined,
@@ -125,6 +137,8 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
             diet: diet || undefined,
             exercise: exercise || undefined,
             medicine: medicine || undefined,
+            waterIntake: waterIntake || undefined,
+            sodiumIntake: sodiumIntake || undefined,
             feelingMorning: feelingMorning || undefined,
             feelingAfternoon: feelingAfternoon || undefined,
             feelingNight: feelingNight || undefined,
@@ -144,6 +158,8 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
       setDiet('');
       setExercise('');
       setMedicine('');
+      setWaterIntake('');
+      setSodiumIntake('');
       setFeelingMorning('');
       setFeelingAfternoon('');
       setFeelingNight('');
@@ -249,6 +265,47 @@ export function DailyLogForm({ onSuccess }: DailyLogFormProps) {
         {fieldErrors.medicine && (
           <p className="mt-1 text-sm text-red-600">{fieldErrors.medicine.join(', ')}</p>
         )}
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label
+            htmlFor="daily-water-intake"
+            className="mb-1 block text-sm font-medium text-foreground-soft"
+          >
+            Water intake (optional)
+          </label>
+          <input
+            id="daily-water-intake"
+            type="text"
+            value={waterIntake}
+            onChange={(e) => setWaterIntake(e.target.value)}
+            placeholder="e.g. 8 glasses, 2.5 L"
+            className={inputClass}
+          />
+          {fieldErrors.waterIntake && (
+            <p className="mt-1 text-sm text-red-600">{fieldErrors.waterIntake.join(', ')}</p>
+          )}
+        </div>
+        <div>
+          <label
+            htmlFor="daily-sodium-intake"
+            className="mb-1 block text-sm font-medium text-foreground-soft"
+          >
+            Sodium / salt (optional)
+          </label>
+          <input
+            id="daily-sodium-intake"
+            type="text"
+            value={sodiumIntake}
+            onChange={(e) => setSodiumIntake(e.target.value)}
+            placeholder="e.g. 3g"
+            className={inputClass}
+          />
+          {fieldErrors.sodiumIntake && (
+            <p className="mt-1 text-sm text-red-600">{fieldErrors.sodiumIntake.join(', ')}</p>
+          )}
+        </div>
       </div>
 
       <div>
