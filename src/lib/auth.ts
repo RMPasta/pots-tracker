@@ -6,7 +6,7 @@ import { prisma } from './prisma';
 import { logger } from './logger';
 
 const resendApiKey = process.env.RESEND_API_KEY;
-const resendFrom = process.env.RESEND_FROM ?? 'POTS Tracker <onboarding@resend.dev>';
+const resendFrom = process.env.RESEND_FROM ?? 'POTS Companion <onboarding@resend.dev>';
 
 const providers = [
   ...(resendApiKey

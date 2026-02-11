@@ -220,7 +220,7 @@ export async function buildPdf(
 
   function drawTitleBlock(page: PDFPage, startY: number): number {
     let yy = startY;
-    page.drawText('POTS Tracker – Doctor Report', {
+    page.drawText('POTS Companion – Doctor Report', {
       x: MARGIN,
       y: yy,
       size: TITLE_SIZE,

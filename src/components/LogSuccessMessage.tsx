@@ -43,8 +43,8 @@ export function LogSuccessMessage({
           .
         </p>
         <p className="mt-2 text-sm text-foreground-soft/80">
-          Please share POTS Tracker in POTS communities—like Reddit—or with friends. We want to help
-          as many people as possible.
+          Please share POTS Companion in POTS communities—like Reddit—or with friends. We want to
+          help as many people as possible.
         </p>
       </div>
     </div>

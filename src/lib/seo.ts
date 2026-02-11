@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-export const SITE_NAME = 'POTS Tracker';
+export const SITE_NAME = 'POTS Companion';
 
 export function getBaseUrl(): string {
   if (typeof process.env.NEXT_PUBLIC_APP_URL === 'string' && process.env.NEXT_PUBLIC_APP_URL) {

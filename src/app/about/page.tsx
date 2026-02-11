@@ -5,9 +5,9 @@ import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata = buildPageMetadata({
   path: '/about',
-  title: 'About — POTS Tracker',
+  title: 'About — POTS Companion',
   description:
-    'Why we built POTS Tracker: a symptom diary and trigger tracker for people with POTS and dysautonomia. Export for your doctor, AI insights, and gentle support.',
+    'Why we built POTS Companion: a symptom diary and trigger tracker for people with POTS and dysautonomia. Export for your doctor, AI insights, and gentle support.',
 });
 
 export default function AboutPage(): React.ReactElement {
@@ -21,13 +21,13 @@ export default function AboutPage(): React.ReactElement {
           <AppLogo size="xl" className="scale-110 object-center" />
         </div>
         <h1 className="text-xl font-semibold tracking-tight text-foreground-soft">
-          About POTS Tracker
+          About POTS Companion
         </h1>
 
         <section>
           <h2 className="mb-2 text-lg font-medium text-foreground-soft">Why we built it</h2>
           <p className="text-sm leading-relaxed text-foreground-soft/90">
-            POTS Tracker started as a small personal project for my wife, Dana, after she was
+            POTS Companion started as a small personal project for my wife, Dana, after she was
             finally diagnosed with POTS. As she began trying to manage hydration, diet, activity,
             and medications, we found that keeping up with tracking symptoms and daily habits was
             proving difficult. We wanted something simple, quiet, and easy to keep up with that
@@ -38,7 +38,7 @@ export default function AboutPage(): React.ReactElement {
         <section>
           <h2 className="mb-2 text-lg font-medium text-foreground-soft">Who it’s for</h2>
           <p className="text-sm leading-relaxed text-foreground-soft/90">
-            POTS Tracker is for anyone with POTS or dysautonomia who wants an easier way to keep
+            POTS Companion is for anyone with POTS or dysautonomia who wants an easier way to keep
             track of how they’re doing day to day. You can log how you’re feeling, record flare-ups
             when they happen, and look back over time to notice possible patterns. Your data can be
             exported as a CSV to share with your care team if that’s helpful.
@@ -68,7 +68,7 @@ export default function AboutPage(): React.ReactElement {
         </section>
 
         <p className="text-sm leading-relaxed text-foreground-soft/90">
-          We hope POTS Tracker makes it a little easier to live with POTS and to have better
+          We hope POTS Companion makes it a little easier to live with POTS and to have better
           conversations with your care team. If you have feedback or ideas, we’d love to hear from
           you—
           <Link href="/contact" className="underline hover:text-foreground-soft">

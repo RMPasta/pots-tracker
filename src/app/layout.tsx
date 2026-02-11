@@ -8,13 +8,13 @@ const baseUrl = getBaseUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
-  title: 'POTS Tracker',
+  title: 'POTS Companion',
   description:
     'Track POTS symptoms and behavior to identify triggers and patterns. Log daily or log incidents; export for your doctor; get gentle AI insights.',
   openGraph: {
     type: 'website',
-    siteName: 'POTS Tracker',
-    images: [{ url: '/logo.png', width: 512, height: 512, alt: 'POTS Tracker' }],
+    siteName: 'POTS Companion',
+    images: [{ url: '/logo.png', width: 512, height: 512, alt: 'POTS Companion' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -29,7 +29,7 @@ export const viewport: Viewport = {
 
 const themeScript = `
 (function(){
-  var t = localStorage.getItem('pots-tracker-theme');
+  var t = localStorage.getItem('potscompanionTheme');
   if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
 })();
 `;

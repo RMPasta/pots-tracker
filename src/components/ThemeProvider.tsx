@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 
 type Theme = 'light' | 'dark';
 
-const THEME_KEY = 'pots-tracker-theme';
+const THEME_KEY = 'potscompanionTheme';
 
 function getStoredTheme(): Theme {
   if (typeof window === 'undefined') return 'light';

@@ -8,7 +8,7 @@ import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata = buildPageMetadata({
   path: '/pricing',
-  title: 'Plans & pricing — POTS Tracker',
+  title: 'Plans & pricing — POTS Companion',
   description:
     'Free tier: symptom and trigger logging, history, CSV export. Pro: AI insights and PDF doctor report for POTS symptom tracking.',
 });

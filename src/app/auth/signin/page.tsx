@@ -5,8 +5,8 @@ import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata = buildPageMetadata({
   path: '/auth/signin',
-  title: 'Sign in — POTS Tracker',
-  description: 'Sign in to POTS Tracker to track symptoms, triggers, and export for your doctor.',
+  title: 'Sign in — POTS Companion',
+  description: 'Sign in to POTS Companion to track symptoms, triggers, and export for your doctor.',
 });
 
 export default async function SignInPage() {

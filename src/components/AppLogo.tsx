@@ -15,7 +15,7 @@ export function AppLogo({ size = 'md', className }: { size?: Size; className?: s
       <div className="flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-[4px]">
         <Image
           src="/logo.png"
-          alt="POTS Tracker"
+          alt="POTS Companion"
           width={96}
           height={96}
           className="scale-[1.34] object-center"
@@ -28,7 +28,7 @@ export function AppLogo({ size = 'md', className }: { size?: Size; className?: s
   return (
     <Image
       src="/logo.png"
-      alt="POTS Tracker"
+      alt="POTS Companion"
       width={px}
       height={px}
       className={className}

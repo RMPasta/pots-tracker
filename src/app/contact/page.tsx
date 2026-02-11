@@ -7,9 +7,9 @@ import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata = buildPageMetadata({
   path: '/contact',
-  title: 'Contact — POTS Tracker',
+  title: 'Contact — POTS Companion',
   description:
-    'Send feedback, report a bug, or get support for POTS Tracker. We read every message.',
+    'Send feedback, report a bug, or get support for POTS Companion. We read every message.',
 });
 
 export default async function ContactPage(): Promise<React.ReactElement> {
@@ -26,7 +26,7 @@ export default async function ContactPage(): Promise<React.ReactElement> {
         </div>
         <h1 className="text-xl font-semibold tracking-tight text-foreground-soft">Contact</h1>
         <p className="text-sm text-foreground-soft/80">
-          Feedback for POTS Tracker: send a message, report a bug, or say hello. We read every
+          Feedback for POTS Companion: send a message, report a bug, or say hello. We read every
           message.
         </p>
         {session && (
