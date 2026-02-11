@@ -1,24 +1,25 @@
 import Image from 'next/image';
 
-type Size = 'sm' | 'md' | 'lg' | 'xl' | 'header';
+type Size = 'sm' | 'md' | 'lg' | 'hero' | 'xl' | 'header';
 
 const sizes: Record<Exclude<Size, 'header'>, number> = {
   sm: 48,
   md: 80,
   lg: 120,
+  hero: 200,
   xl: 360,
 };
 
 export function AppLogo({ size = 'md', className }: { size?: Size; className?: string }) {
   if (size === 'header') {
     return (
-      <div className="flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-[4px]">
+      <div className="flex shrink-0 items-center justify-center rounded-[4px]">
         <Image
           src="/logo.png"
           alt="POTS Companion"
-          width={96}
-          height={96}
-          className="scale-[1.34] object-center"
+          width={72}
+          height={72}
+          className="object-cover"
           priority
         />
       </div>
@@ -31,7 +32,7 @@ export function AppLogo({ size = 'md', className }: { size?: Size; className?: s
       alt="POTS Companion"
       width={px}
       height={px}
-      className={className}
+      className={className ? `object-cover ${className}` : 'object-cover'}
       priority
     />
   );

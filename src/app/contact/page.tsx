@@ -21,8 +21,8 @@ export default async function ContactPage(): Promise<React.ReactElement> {
         <ThemeToggle />
       </div>
       <div className="flex w-full max-w-md flex-col items-center gap-6 rounded-2xl bg-card-bg p-4 text-center shadow-(--shadow-soft)">
-        <div className="mb-1 flex h-[200px] w-[200px] shrink-0 items-center justify-center overflow-hidden">
-          <AppLogo size="xl" className="scale-110 object-center" />
+        <div className="mb-1 flex shrink-0 items-center justify-center">
+          <AppLogo size="lg" />
         </div>
         <h1 className="text-xl font-semibold tracking-tight text-foreground-soft">Contact</h1>
         <p className="text-sm text-foreground-soft/80">

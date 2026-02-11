@@ -40,8 +40,8 @@ export default async function SignInPage() {
         <ThemeToggle />
       </div>
       <div className="flex min-h-[520px] w-full max-w-md flex-col items-center rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft)">
-        <div className="mb-5 flex h-[280px] w-[280px] shrink-0 items-center justify-center overflow-hidden">
-          <AppLogo size="xl" className="scale-125 object-center" />
+        <div className="mb-5 flex shrink-0 items-center justify-center">
+          <AppLogo size="xl" />
         </div>
 
         <div className="w-full flex flex-col gap-4">

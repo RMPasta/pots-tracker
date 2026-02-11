@@ -19,36 +19,44 @@ export default async function Home() {
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>
-      <main className="flex min-h-[520px] w-full max-w-md flex-col items-center rounded-2xl bg-card-bg p-4 text-center shadow-(--shadow-soft)">
+      <main className="flex w-full max-w-md flex-col items-center rounded-2xl border border-white/60 bg-card-bg p-5 text-center shadow-(--shadow-soft) sm:p-6">
         <h1 className="sr-only">POTS Companion — Symptom tracking for POTS</h1>
-        <div className="mb-1 flex h-[280px] w-[280px] shrink-0 items-center justify-center overflow-hidden">
-          <AppLogo size="xl" className="scale-125 object-center" />
+        <div className="mb-3 flex shrink-0 items-center justify-center">
+          <AppLogo size="hero" />
         </div>
-        <p className="mb-5 text-lg leading-snug text-foreground-soft/90">
+        <p className="mb-0.5 text-sm font-medium uppercase tracking-wider text-foreground-soft/70">
+          Symptom & trigger tracking
+        </p>
+        <h2 className="mb-2 text-xl font-semibold tracking-tight text-foreground-soft sm:text-2xl">
+          For POTS and dysautonomia
+        </h2>
+        <p className="mb-4 max-w-sm text-base leading-relaxed text-foreground-soft/85">
           Track symptoms and behavior to identify triggers and patterns. Log daily or log incidents;
           export for your doctor; get gentle AI insights.
         </p>
-        {session ? (
+        <div className="flex flex-col items-center gap-2">
+          {session ? (
+            <Link
+              href="/dashboard"
+              className="w-full max-w-[240px] rounded-full bg-btn-primary px-6 py-3.5 text-center font-medium text-foreground-soft shadow-sm transition-colors hover:bg-btn-primary-hover focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40 focus:ring-offset-2"
+            >
+              Go to Dashboard
+            </Link>
+          ) : (
+            <Link
+              href="/auth/signin"
+              className="w-full max-w-[240px] rounded-full bg-btn-primary px-6 py-3.5 text-center font-medium text-foreground-soft shadow-sm transition-colors hover:bg-btn-primary-hover focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/40 focus:ring-offset-2"
+            >
+              Get Started
+            </Link>
+          )}
           <Link
-            href="/dashboard"
-            className="rounded-full bg-btn-primary px-6 py-3 text-foreground-soft transition-colors hover:bg-btn-primary-hover"
+            href="/contact"
+            className="text-sm text-foreground-soft/70 underline decoration-foreground-soft/30 underline-offset-2 transition-colors hover:text-foreground-soft hover:decoration-foreground-soft/50"
           >
-            Go to Dashboard
+            Contact
           </Link>
-        ) : (
-          <Link
-            href="/auth/signin"
-            className="rounded-full bg-btn-primary px-6 py-3 text-foreground-soft transition-colors hover:bg-btn-primary-hover"
-          >
-            Get Started
-          </Link>
-        )}
-        <Link
-          href="/contact"
-          className="mt-4 text-sm text-foreground-soft/80 underline hover:text-foreground-soft"
-        >
-          Contact
-        </Link>
+        </div>
       </main>
     </div>
   );
