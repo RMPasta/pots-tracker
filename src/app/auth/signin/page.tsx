@@ -19,7 +19,7 @@ export default async function SignInPage() {
           <ThemeToggle />
         </div>
         <div className="flex flex-col items-center gap-4 rounded-2xl bg-card-bg px-8 py-6 shadow-(--shadow-soft)">
-          <AppLogo size="md" className="shrink-0" />
+          <AppLogo size="xl" variant="withTitle" className="shrink-0" />
           <p className="text-lg text-foreground-soft">You are already signed in.</p>
           <a
             href="/dashboard"
@@ -41,7 +41,7 @@ export default async function SignInPage() {
       </div>
       <div className="flex min-h-[520px] w-full max-w-md flex-col items-center rounded-2xl bg-card-bg p-4 shadow-(--shadow-soft)">
         <div className="mb-5 flex shrink-0 items-center justify-center">
-          <AppLogo size="xl" />
+          <AppLogo size="xl" variant="withTitle" />
         </div>
 
         <div className="w-full flex flex-col gap-4">

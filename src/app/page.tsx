@@ -22,7 +22,7 @@ export default async function Home() {
       <main className="flex w-full max-w-md flex-col items-center rounded-2xl border border-white/60 bg-card-bg p-5 text-center shadow-(--shadow-soft) sm:p-6">
         <h1 className="sr-only">POTS Companion — Symptom tracking for POTS</h1>
         <div className="mb-3 flex shrink-0 items-center justify-center">
-          <AppLogo size="hero" />
+          <AppLogo size="xl" variant="withTitle" />
         </div>
         <p className="mb-0.5 text-sm font-medium uppercase tracking-wider text-foreground-soft/70">
           Symptom & trigger tracking

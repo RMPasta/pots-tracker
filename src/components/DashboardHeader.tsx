@@ -17,50 +17,66 @@ export function DashboardHeader({ links, signOutSlot, signOutSlotMobile }: Dashb
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="relative flex min-h-[88px] items-center justify-between rounded-2xl bg-card-bg px-3 py-4 shadow-(--shadow-soft) sm:px-4 sm:py-5">
-      <div className="flex min-w-0 flex-1 items-center gap-2">
-        <AppLogo size="header" />
+    <header className="relative flex min-h-[88px] items-center justify-between gap-2 rounded-2xl bg-card-bg px-3 py-4 shadow-(--shadow-soft) sm:px-4 sm:py-5">
+      <div className="flex min-w-0 shrink-0 items-center gap-2">
+        <Link
+          href="/dashboard"
+          className="focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/50 focus:ring-offset-2 rounded-[4px]"
+        >
+          <AppLogo size="header" />
+        </Link>
       </div>
 
-      <button
-        type="button"
-        onClick={() => setMenuOpen((o) => !o)}
-        aria-expanded={menuOpen}
-        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-full bg-card-bg shadow-(--shadow-soft) transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/50"
-      >
-        {menuOpen ? (
-          <svg
-            className="h-6 w-6 text-foreground-soft"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        ) : (
-          <svg
-            className="h-6 w-6 text-foreground-soft"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        )}
-      </button>
+      <div className="flex min-w-0 flex-1 items-center justify-center">
+        <Link
+          href="/dashboard"
+          className="focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/50 focus:ring-offset-2 rounded-[4px]"
+        >
+          <AppLogo size="navTitle" variant="withTitle" />
+        </Link>
+      </div>
+
+      <div className="flex min-w-0 shrink-0 items-center justify-end">
+        <button
+          type="button"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-full bg-card-bg shadow-(--shadow-soft) transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-pastel-outline-pink/50"
+        >
+          {menuOpen ? (
+            <svg
+              className="h-6 w-6 text-foreground-soft"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            <svg
+              className="h-6 w-6 text-foreground-soft"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
 
       {menuOpen && (
         <>

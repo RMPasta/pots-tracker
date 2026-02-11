@@ -51,7 +51,7 @@ export default async function PricingPage({ searchParams }: Props) {
       </div>
       <div className="flex w-full max-w-2xl flex-col items-center gap-4 rounded-2xl bg-card-bg p-4 text-center shadow-(--shadow-soft)">
         <div className="mb-1 flex shrink-0 items-center justify-center">
-          <AppLogo size="xl" />
+          <AppLogo size="xl" variant="withTitle" />
         </div>
         <h1 className="text-xl font-semibold tracking-tight text-foreground-soft">Plans</h1>
         <p className="text-sm text-foreground-soft/80">Symptom tracking for POTS: Free and Pro.</p>
